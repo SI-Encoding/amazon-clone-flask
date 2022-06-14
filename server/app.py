@@ -1,4 +1,5 @@
 from flask import Flask, jsonify, session, request, g
+from flask_cors import CORS
 
 from models import *
 
@@ -6,7 +7,12 @@ from models import *
 
 app = Flask(__name__)
 app.secret_key = 'swreagbnekiakbgkagv'
-
+CORS(app)
+cors = CORS(app, resource = {
+    r"/*": {
+        "origins": "*"
+    }
+})
 
 @app.route('/')
 def index():
