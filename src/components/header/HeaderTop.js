@@ -1,7 +1,10 @@
-import React from 'react'
+import React, {useState} from 'react'
 import './HeaderTop.css'
+import HeaderTopLogin from './HeaderTopLogin'
 
 function HeaderTop() {
+    const [loginPopup, setLoginPopup] = useState(false) 
+
   return (
     <>
         <div className="header-menu-container-top">
@@ -33,9 +36,10 @@ function HeaderTop() {
             <div className="header-menu-right">
                 <img className="header-menu-flag" src={require("../../assets/amazon-flag-canada.png")} alt="amazon-flag"/>
                 <img className="header-menu-flag-dropdown" src={require("../../assets/amazon-icons-dropdown-arrow-grey.png")} alt="amazon-dropdown"/>
-                <div className="header-menu-address">
+                <div className="header-menu-address" onClick={()=> setLoginPopup(!loginPopup)}>
                     <span className="header-menu-address-top" style={{marginLeft:"0px", color:"#fff"}}>Hello, Sign in</span>
                     <span className="header-menu-address-bottom">Account & Lists</span>
+                    {loginPopup && <HeaderTopLogin/>}
                 </div>
                 <img className="header-menu-flag-dropdown" src={require("../../assets/amazon-icons-dropdown-arrow-grey.png")} alt="amazon-dropdown"/>
                 <div className="header-menu-address">
