@@ -1,6 +1,7 @@
 import React, {useState} from 'react'
 import './HeaderTop.css'
 import HeaderTopLogin from './HeaderTopLogin'
+import {Link} from 'react-router-dom'
 
 function HeaderTop() {
     const [loginPopup, setLoginPopup] = useState(false) 
@@ -10,7 +11,7 @@ function HeaderTop() {
         <div className="header-menu-container-top">
             <div className="header-menu-left">
                 <div className="header-menu-logo-container">
-                    <img className ="header-menu-logo" src={require('../../assets/amazon-icons-logo.png')} alt="amazon-logo"/>
+                    <Link to="/"><img className ="header-menu-logo" src={require('../../assets/amazon-icons-logo.png')} alt="amazon-logo"/></Link>
                     <span className="header-menu-logo-country">.ca</span>
                 </div>
                 <img className="header-menu-location" src={require('../../assets/amazon-icons-location.png')} alt="amazon-location"/>
