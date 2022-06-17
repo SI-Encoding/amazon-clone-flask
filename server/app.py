@@ -2,17 +2,25 @@ from flask import Flask, jsonify, session, request, g
 from flask_cors import CORS
 
 from models import *
+from settings import PGUSER, PGPASS, PGHOST, PGDB, SECRET_KEY
 
-
+from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
-app.secret_key = 'swreagbnekiakbgkagv'
+app.secret_key = SECRET_KEY
 CORS(app)
 cors = CORS(app, resource = {
     r"/*": {
         "origins": "*"
     }
 })
+
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://{PGUSER}:{PGPASS}@{PGHOST}/{PGDB}".format(PGUSER=PGUSER,PGPASS=PGPASS,PGHOST=PGHOST,PGDB=PGDB)
+print(app.config['SQLALCHEMY_DATABASE_URI'])
+
+
+db = SQLAlchemy(app)
 
 @app.route('/')
 def index():
@@ -24,7 +32,7 @@ def before_request():
     g.user = None
 
     if 'user_id' in session:
-        user = [x for x in users if x.id == session['user_id']][0]
+        user = User.query.filter(User.id==session['user_id']).first()
         g.user = user
 
 
@@ -36,7 +44,7 @@ def login():
     password = request.form['password']
 
     try:
-        user = [u for u in users if u.username == username][0]
+        user = User.query.filter(User.username==username).first()
     except IndexError:
         return jsonify({'Error': 'User {user} not found.'.format(user=username)}), 401
 
