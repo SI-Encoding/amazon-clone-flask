@@ -50,7 +50,7 @@ def login():
 
     if user.password == password:
         session['user_id'] = user.id
-        return jsonify({'Success': 'Successfully signed in as {user}.'.format(user=username)}), 200
+        return jsonify({'Success': 'Successfully signed in as {user}.'.format(user=username), 'username': username}), 200
     else:
         return jsonify({'Error': 'User {user} and password combination is incorrect.'.format(user=username)}), 401
 
