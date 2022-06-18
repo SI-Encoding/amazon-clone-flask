@@ -1,16 +1,21 @@
-
 class Controller:
     def __init__(self, model, db):
         self.model = model
         self.db = db
 
     def get_one(self, **criteria):
-        item = self.model.query.filter(**criteria).first()
+        filter_criteria = []
+        for key, val in criteria.items():
+            filter_criteria.append(getattr(self.model, key)==val)
+        item = self.model.query.filter(*filter_criteria).first()
         return item
 
     def get_many(self, limit=10, **criteria):
         if criteria:
-            items = self.model.query.filter(**criteria).limit(limit=limit)
+            filter_criteria = []
+            for key, val in criteria.items():
+                filter_criteria.append(getattr(self.model, key)==val)
+            items = self.model.query.filter(*filter_criteria).limit(limit=limit)
         else:
             items = self.model.query.all()
         return items
