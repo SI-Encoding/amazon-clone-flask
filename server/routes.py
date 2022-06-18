@@ -10,6 +10,7 @@ OrderController = Controller(Order, db)
 
 @app.route('/products', methods=['GET'])
 def products():
+    criteria = dict()
     if request.args:
         criteria = dict(request.args)
     response_object = {'status': 'success'}
