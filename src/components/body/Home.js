@@ -1,6 +1,9 @@
 import React from 'react'
 import './Home.css'
 
+import FeaturedProducts from './FeaturedProducts'
+
+
 function Home() {
     return (
         <>
@@ -64,9 +67,10 @@ function Home() {
                                 </div>
                             </div>
 
-                        </div>  
-                    </div> 
-
+                        </div>
+                    </div>
+                    <FeaturedProducts/>
+                    <hr style={{height: "20px", border: "none", margin: "0"}}/>
                 </div>
             </div>
         </>
