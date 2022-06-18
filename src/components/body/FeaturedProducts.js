@@ -14,7 +14,7 @@ function FeaturedProducts() {
      const res = await axios.get('http://localhost:5000/products')
      setProducts(res.data.data);
      console.log(res.data.data);
-     // res.data.data[0].img = "amazon-product-vacuum.jpg";
+     res.data.data[0].img = "amazon-product-vacuum.jpg";
    }  
    fetchProducts()
   },[])
