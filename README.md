@@ -1,7 +1,26 @@
-# Amazon-clone
+## Amazon-clone
 This is an web application done using React and Flask.
 
+## To setup the backend under server directory
 
+# How to install the needed dependencies
+
+1. pip install virtualenv
+2. Create your own virtual environment
+    a. For Windows, run "virtualenv <YOUR_ENV_NAME>"
+    b. For iOS, run "python -m venv <YOUR_ENV_NAME>"
+    c. For Linux, run "python -m venv <YOUR_ENV_NAME>"
+3. Run the virtual environment
+    a. For Windows, run ".\<YOUR_ENV_NAME>\Scripts\activate"
+    b. For iOS, run "source <YOUR_ENV_NAME>/bin/activate"
+    c. For Linux, run "source <YOUR_ENV_NAME>/bin/activate"
+4. To install run "pip install -r requirements.txt"
+
+# Creating the database
+
+1. Follow tutorial on https://medium.com/@dan.chiniara/installing-postgresql-for-windows-7ec8145698e3#:~:text=Graphical%20Installer%3A%20Postgres.app,and%20database.&text=Mac%20users%2C%20you're%20all%20set!
+2. Rename env-example to .env, and fill in the values.
+3. To create the database, for example, on Ubuntu run "sudo -u postgres psql -c 'create database {db_name};'" 
 
 
 # Getting Started with Create React App
