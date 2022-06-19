@@ -65,41 +65,41 @@ function Product() {
 
   return (
     <div className="product-left-and-right" >
-<div className='product-main-container'>
-           <div className='product-product' >
-            <img className='product-product-image' src={ displayProduct.img && require(`../../assets/${displayProduct.img}`)}/>
-            <div className='product-product-info'>
-                <div className="product-product-info-header">
-                <h1 className='product-product-title'>
-                  {displayProduct.name}
-                </h1>
-                </div>
-                <div style={{marginTop:"15px"}}>
-                  <span className="product-product-subtotal" style={{marginLeft: "0", marginRight: "22px", paddingLeft: "5px"}}> <strong>${displayProduct.price / 100}</strong></span>
-                  <div style={{borderBottom: "1px solid #e7e7e7", marginTop: "20px"}}></div> 
-                </div>
-                <div>
-                  <h1 className="product-product-subtotal" style={{fontSize: "16px!important", lineHeight: "24px!important", fontFamily: "sans serif", fontWeight: "700"}}>About this item</h1> 
-                  <li>{displayProduct.description}</li>
-                </div>
+      <div className='product-main-container'>
+        <div className='product-product' >
+          <img className='product-product-image' src={ displayProduct.img && require(`../../assets/${displayProduct.img}`)} alt={`${displayProduct.name}`}/>
+          <div className='product-product-info'>
+            <div className="product-product-info-header">
+              <h1 className='product-product-title'>
+                {displayProduct.name}
+              </h1>
+            </div>    
+            <div style={{marginTop:"15px"}}>    
+              <span className="product-product-subtotal" style={{marginLeft: "0", marginRight: "22px", paddingLeft: "5px"}}> <strong>${displayProduct.price / 100}</strong></span>
+              <div style={{borderBottom: "1px solid #e7e7e7", marginTop: "20px"}}></div> 
             </div>
+            <div>    
+              <h1 className="product-product-subtotal" style={{fontSize: "16px!important", lineHeight: "24px!important", fontFamily: "sans serif", fontWeight: "700"}}>About this item</h1> 
+              <li>{displayProduct.description}</li>
+            </div>    
+          </div>
         </div>    
+      </div>
+      <div className='product-right'>
+        <div className='subtotal'>
+          <span className="product-product-subtotal" style={{marginLeft: "0", marginRight: "auto", paddingLeft: "5px"}}> <strong>${displayProduct.price / 100}</strong></span>
+          {/* if statement here product.inventory !== 0*/}
+          { displayProduct.inventory !== 0 ? <p className="product-product-subtotal" style={{marginLeft: "0", marginRight: "auto", paddingLeft: "5px", color: "#007600!important", fontSize: "14px!important",
+          lineHeight: "20px!important"}}>In stock.</p> :
+          <p className="product-product-subtotal" style={{marginLeft: "0", marginRight: "auto", paddingLeft: "5px", color: "#007600!important", fontSize: "14px!important",
+          lineHeight: "20px!important"}}>Out of stock.</p> }
+          <span>Quantity:</span>
+          <select style={{border: "1px solid #DDD", borderRadius: "4px 4px 4px 4px", padding: "3px"}}>{[1,2,3,4,5].slice(0, displayProduct.inventory < 5 ? displayProduct.inventory : 5).map(opt => (<option value={opt}>{opt}</option>)) }</select>
+          <button onClick={(e)=> addToCart(displayProduct, e)}>Add to Cart</button>
+          <button style={{background: "#FFA41C" , borderColor: "#FF8F00"}}>Buy now</button>
         </div>
-<div className='product-right'>
-                <div className='subtotal'>
-        <span className="product-product-subtotal" style={{marginLeft: "0", marginRight: "auto", paddingLeft: "5px"}}> <strong>${displayProduct.price / 100}</strong></span>
-       {/* if statement here product.inventory !== 0*/}
-     { displayProduct.inventory !== 0 ? <p className="product-product-subtotal" style={{marginLeft: "0", marginRight: "auto", paddingLeft: "5px", color: "#007600!important", fontSize: "14px!important",
-    lineHeight: "20px!important"}}>In stock.</p> :
-    <p className="product-product-subtotal" style={{marginLeft: "0", marginRight: "auto", paddingLeft: "5px", color: "#007600!important", fontSize: "14px!important",
-    lineHeight: "20px!important"}}>Out of stock.</p> }
-    <span>Quantity:</span>
-                    <select style={{border: "1px solid #DDD", borderRadius: "4px 4px 4px 4px", padding: "3px"}}>{[1,2,3,4,5].slice(0, displayProduct.inventory < 5 ? displayProduct.inventory : 5).map(opt => (<option value={opt}>{opt}</option>)) }</select>
-            <button onClick={(e)=> addToCart(displayProduct, e)}>Add to Cart</button>
-            <button style={{background: "#FFA41C" , borderColor: "#FF8F00"}}>Buy now</button>
-            </div>
-            </div>
-        </div>
+      </div>
+    </div>
   )
 }
 

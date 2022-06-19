@@ -9,7 +9,7 @@ function HeaderTopLogin() {
                 <div className="header-menu-signin-nav-inner-arrow">
                 </div>
             <div className="header-menu-signin-nav-tooltip">
-                <Link to="login"><a href className="header-menu-signin-nav-signin">Sign in</a></Link>
+                <Link to="/login"><a href className="header-menu-signin-nav-signin">Sign in</a></Link>
                 <div className="header-menu-signin-nav-tooltip-footer">    
                     New&nbsp;customer?    
                     <a className="header-menu-signin-nav-tooltip-footer-link">Start&nbsp;here.</a>        
