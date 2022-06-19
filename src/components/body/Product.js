@@ -67,7 +67,7 @@ function Product() {
     <div className="product-left-and-right" >
       <div className='product-main-container'>
         <div className='product-product' >
-          <img className='product-product-image' src={ displayProduct.img && require(`../../assets/${displayProduct.img}`)}/>
+          <img className='product-product-image' src={ displayProduct.img && require(`../../assets/${displayProduct.img}`)} alt={`${displayProduct.name}`}/>
           <div className='product-product-info'>
             <div className="product-product-info-header">
               <h1 className='product-product-title'>

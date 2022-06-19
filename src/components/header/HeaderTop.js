@@ -49,10 +49,12 @@ function HeaderTop() {
                     <span className="header-menu-address-top" style={{marginLeft:"0px", color:"#fff"}}>Returns</span>
                     <span className="header-menu-address-bottom">& Orders</span>
                 </div>
-                <div className="header-menu-cart-container"> 
-                    <span className="header-menu-cart-quantity">{total_items}</span>
-                    <img className="header-menu-cart-img" src={require("../../assets/amazon-icons-cart.png")} alt="amazon-cart"/>
-                </div>
+                <Link to="cart">
+                    <div className="header-menu-cart-container"> 
+                        <span className="header-menu-cart-quantity">{total_items}</span>
+                        <img className="header-menu-cart-img" src={require("../../assets/amazon-icons-cart.png")} alt="amazon-cart"/>
+                    </div>
+                </Link>
                 <span className="header-menu-address-bottom" style={{marginTop: "15px"}}>Cart</span>
             </div>
         </div>
