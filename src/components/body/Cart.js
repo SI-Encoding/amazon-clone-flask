@@ -99,11 +99,11 @@ function Cart() {
               <p className='cart-product-title' style={{fontSize: "18px", lineHeight: "24px", fontFamily: "sans-serif" }}>
                 {products[key][0].name}
               </p> 
-              <span className="cart-product-title" style={{marginLeft: "auto", marginRight: "22px", color: "#0F1111",fontWeight: 600}}>
+              <span className="cart-product-title" style={{marginLeft: "auto", marginRight: "22px", color: "#0F1111", fontWeight: 600}}>
                 ${products[key][0].price}
               </span>
             </div>
-            <div style={{paddingBottom: "10px"}}>
+            <div className="cart-container-product-stock">
               {
                 products[key][0].inventory !== 0 ?
                   <p className="cart-product-stock" style={{marginLeft: "0", marginRight: "auto", paddingLeft: "5px", color: "#007600", fontSize: "14px", lineHeight: "20px"}}>
@@ -114,7 +114,12 @@ function Cart() {
                     Out of stock
                   </p> 
               }
-              <p style={{fontSize: "14px", lineHeight: "20px", color: "#565959"}}>Sold by <span style={{color: "#007185"}}>{products[key][0].seller}</span></p>
+              <p className="cart-container-product-author">
+                Sold by 
+                <span className="cart-product-author">
+                  {products[key][0].seller}
+                </span>
+              </p>
             </div>
             <div>
               <li>
@@ -158,9 +163,9 @@ function Cart() {
         (
         <div className="cart-container-empty">
           <div className="cart-empty" >
-            <img style={{height: "200px", width: "600px"}} src="https://m.media-amazon.com/images/G/15/cart/empty/kettle-desaturated._CB424694027_.svg" alt="empty-cart"/>
+            <img className="cart-empty-image" src="https://m.media-amazon.com/images/G/15/cart/empty/kettle-desaturated._CB424694027_.svg" alt="empty-cart"/>
             <div> 
-              <span style={{fontWeight: "700", fontSize: "24px",lineHeight: "32px"}}>
+              <span className="cart-empty-text">
                 Your Amazon Cart is empty
               </span>
               <div>
@@ -168,7 +173,7 @@ function Cart() {
                   Shop today's deals
                 </a>
               </div>
-              <div style={{display:"flex"}}> 
+              <div className="cart-container-empty-registration"> 
                 <button className="cart-empty-signin">
                   Sign in to your account
                 </button> 
@@ -183,14 +188,24 @@ function Cart() {
         )
         } 
         <div className="cart-container-subtotal">
-          <span className="cart-subtotal">Subtotal ({total_items} items):<span style={{color: "#0F1111",fontWeight: 600, marginLeft: "5px"}}>${(total_cost)}</span></span>
-          <span className="cart-subtotal" style={{marginLeft: "0", marginRight: "22px", paddingLeft: "5px"}}></span> 
+          <span className="cart-container-subtotal">
+            Subtotal ({total_items} items):
+            <span className="cart-subtotal">
+                ${(total_cost)}
+              </span>
+          </span>
+          <span style={{marginLeft: "0", marginRight: "22px", paddingLeft: "5px"}}></span> 
         </div>    
         </div>
         <div className='cart-container-subtotal-checkout'>
           <div className='cart-subtotal-checkout'>
-            <span className="cart-subtotal">Subtotal ({total_items} items):<span style={{color: "#0F1111",fontWeight: 600, marginLeft: "5px"}}>${(total_cost)}</span></span>
-            <span className="cart-subtotal" style={{marginLeft: "0", marginRight: "auto", paddingLeft: "5px"}}> <strong></strong></span>        
+            <span className="cart-container-subtotal">
+              Subtotal ({total_items} items):
+                <span className="cart-subtotal">
+                  ${(total_cost)}
+                </span>
+            </span>
+            <span style={{marginLeft: "0", marginRight: "auto", paddingLeft: "5px"}}></span>        
             <button >Proceed to checkout</button>  
           </div>
         </div>
