@@ -1,6 +1,10 @@
 export const initialState = {
     user: null,
-    selectedProduct: ""
+    selectedProduct: "",
+    total_items: 0,
+    products:{},
+    product_counter:{},
+    total_cost: 0
 }
 
 const set_user = 'SET_USER'

@@ -2,9 +2,11 @@ import React, {useState} from 'react'
 import './HeaderTop.css'
 import HeaderTopLogin from './HeaderTopLogin'
 import {Link} from 'react-router-dom'
+import {useSelector} from 'react-redux'
 
 function HeaderTop() {
     const [loginPopup, setLoginPopup] = useState(false) 
+    const total_items = useSelector(state => state.total_items)
 
   return (
     <>
@@ -48,7 +50,7 @@ function HeaderTop() {
                     <span className="header-menu-address-bottom">& Orders</span>
                 </div>
                 <div className="header-menu-cart-container"> 
-                    <span className="header-menu-cart-quantity">0</span>
+                    <span className="header-menu-cart-quantity">{total_items}</span>
                     <img className="header-menu-cart-img" src={require("../../assets/amazon-icons-cart.png")} alt="amazon-cart"/>
                 </div>
                 <span className="header-menu-address-bottom" style={{marginTop: "15px"}}>Cart</span>
