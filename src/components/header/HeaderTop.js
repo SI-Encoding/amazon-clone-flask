@@ -7,6 +7,7 @@ import {useSelector} from 'react-redux'
 function HeaderTop() {
     const [loginPopup, setLoginPopup] = useState(false) 
     const total_items = useSelector(state => state.total_items)
+    const user = useSelector(state => state.user)
 
   return (
     <>
@@ -40,7 +41,7 @@ function HeaderTop() {
                 <img className="header-menu-flag" src={require("../../assets/amazon-flag-canada.png")} alt="amazon-flag"/>
                 <img className="header-menu-flag-dropdown" src={require("../../assets/amazon-icons-dropdown-arrow-grey.png")} alt="amazon-dropdown"/>
                 <div className="header-menu-address" onClick={()=> setLoginPopup(!loginPopup)}>
-                    <span className="header-menu-address-top" style={{marginLeft:"0px", color:"#fff"}}>Hello, Sign in</span>
+                    <span className="header-menu-address-top" style={{marginLeft:"0px", color:"#fff"}}>Hello, {user? user : 'Sign in'}</span>
                     <span className="header-menu-address-bottom">Account & Lists</span>
                     {loginPopup && <HeaderTopLogin/>}
                 </div>
