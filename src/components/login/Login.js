@@ -3,13 +3,14 @@ import React, {useState} from 'react'
 import axios from 'axios'
 import {set_user} from '../../rootReducer'
 import {useDispatch} from 'react-redux'
-import {Link} from 'react-router-dom'
+import {Link, useNavigate} from 'react-router-dom'
 
 function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('')
     const dispatch = useDispatch()
-   
+    const navigate = useNavigate();
+
     async function signIn(e) {
         e.preventDefault()
         const res = await axios({method:'post', url:'http://localhost:5000/login', data: {username: email, password: password},  headers: {"Content-Type": "multipart/form-data"}})
@@ -18,6 +19,7 @@ function Login() {
                 type: set_user,
                 user: res.data.username
             })
+            navigate(-1)
         }
     }
    
