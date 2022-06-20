@@ -12,7 +12,7 @@ const set_selected_product = 'SET_SELECTED_PRODUCT'
 const set_total_items = 'SET_TOTAL_ITEMS'
 const set_products = 'SET_PRODUCTS'
 const set_product_counter = 'SET_PRODUCT_COUNTER'
-const set_total_cost = 'set_total_cost'
+const set_total_cost = 'SET_TOTAL_COST'
 
 const rootReducer = (state = initialState, action) => {
     console.log(action);
@@ -42,7 +42,7 @@ const rootReducer = (state = initialState, action) => {
                 ...state,
                 product_counter:action.product_counter
             }
-        case 'set_total_cost':
+        case 'SET_TOTAL_COST':
             return {
                 ...state,
                 total_cost:action.total_cost,
