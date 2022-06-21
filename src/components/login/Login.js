@@ -15,11 +15,12 @@ function Login() {
     async function signIn(e) {
         e.preventDefault()
         try {
-            const res = await axios({method:'post', url:'http://localhost:5000/login', data: {username: email, password: password},  headers: {"Content-Type": "multipart/form-data"}})
+            const res = await axios({method:'post', url:'http://localhost:5000/login', data: {email: email, password: password},  headers: {"Content-Type": "multipart/form-data"}})
+            console.log(res.data)
             if(res.status = 200){
                 dispatch({
                     type: set_user,
-                    user: res.data.username
+                    user: res.data.email
                 })
                 setError(false)
                 navigate(-1)
