@@ -7,25 +7,27 @@ order_product_association_table = db.Table(
 	db.Column("product_id", db.ForeignKey("product.id"))
 )
 
-
 class User(db.Model):
     __tablename__ = 'user'
 
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.Text)
+    email = db.Column(db.Text)
     password = db.Column(db.Text)
+    mobile_number = db.Column(db.Text)
     orders = db.relationship("Order", backref='user', lazy='dynamic')
 
-    def __init__(self, username: str, password: str, orders: list = []):
-        self.username = username
+    def __init__(self,email: str, password: str, mobile_number: str, orders: list = []):
+        self.email = email
         self.password = password
+        self.mobile_number = mobile_number
         self.orders = orders
 
     def json(self):
         return {
             'id': self.id,
-            'username': self.username,
+            'email': self.email,
             'password': self.password,
+            'mobile_number': self.mobile_number,
             'orders': self.orders
         }
 

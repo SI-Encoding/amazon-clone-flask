@@ -8,18 +8,25 @@ import {Link, useNavigate} from 'react-router-dom'
 function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('')
+    const [error, setError] = useState(false)
     const dispatch = useDispatch()
     const navigate = useNavigate();
 
     async function signIn(e) {
         e.preventDefault()
-        const res = await axios({method:'post', url:'http://localhost:5000/login', data: {username: email, password: password},  headers: {"Content-Type": "multipart/form-data"}})
-        if(res.status = 200){
-            dispatch({
-                type: set_user,
-                user: res.data.username
-            })
-            navigate(-1)
+        try {
+            const res = await axios({method:'post', url:'http://localhost:5000/login', data: {email: email, password: password},  headers: {"Content-Type": "multipart/form-data"}})
+            console.log(res.data)
+            if(res.status = 200){
+                dispatch({
+                    type: set_user,
+                    user: res.data.email
+                })
+                setError(false)
+                navigate(-1)
+            } 
+        } catch(error){
+            setError(true)
         }
     }
    
@@ -33,6 +40,7 @@ function Login() {
             </Link>
             <div className='login-body'>
                 <h1>Sign-In</h1>
+                {error && <span className="login-error">Sorry! Please enter a correct username and password</span>}
                 <div className='login-form'>
                     <h5> E-mail address</h5>
                     <input value={email} onChange= {(e) => setEmail(e.target.value)}/>

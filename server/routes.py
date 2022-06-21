@@ -33,19 +33,18 @@ def before_request():
 def login():
     session.pop('user_id', None)
 
-    username = request.form['username']
+    email = request.form['email']
     password = request.form['password']
-
-    try:
-        user = User.query.filter(User.username==username).first()
-    except IndexError:
-        return jsonify({'Error': 'User {user} not found.'.format(user=username)}), 401
+   
+    user = User.query.filter(User.email==email).first()
+    if not user:
+        return jsonify({'Error': 'User {user} not found.'.format(user=email)}), 401
 
     if user.password == password:
         session['user_id'] = user.id
-        return jsonify({'Success': 'Successfully signed in as {user}.'.format(user=username), 'username': username}), 200
+        return jsonify({'Success': 'Successfully signed in as {user}.'.format(user=email), 'email': email}), 200
     else:
-        return jsonify({'Error': 'User {user} and password combination is incorrect.'.format(user=username)}), 401
+        return jsonify({'Error': 'User {user} and password combination is incorrect.'.format(user=email)}), 401
 
 @app.route('/order', methods=['GET'])
 def get_order():
@@ -70,4 +69,5 @@ def product():
     response_object['data'] = ProductController.get_one(id=product_id).json()
     return jsonify(response_object), 200, {'Access-Control-Allow-Origin': '*'}
   
+
 

@@ -90,3 +90,10 @@
     border-color: darkgray;
     background: linear-gradient(to bottom,#f7f8fa,#e7e9ec);
 }
+
+.login-error {
+    font-family: sans-serif;
+    font-size: 12px;
+    color: red;
+    padding-bottom: 10px
+}
