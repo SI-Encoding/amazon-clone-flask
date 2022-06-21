@@ -8,7 +8,11 @@ import {Link, useNavigate} from 'react-router-dom'
 function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('')
-    const [error, setError] = useState(false)
+    const [loginError, setLoginError] = useState(false)
+    const [verifyError, setVerifyError] = useState(false)
+    const [verify, setVerify] = useState(false)
+    const [mobile_number, setMobileNumber] = useState("")
+    const [entered_code, setEnteredCode] = useState("")
     const dispatch = useDispatch()
     const navigate = useNavigate();
 
@@ -18,15 +22,29 @@ function Login() {
             const res = await axios({method:'post', url:'http://localhost:5000/login', data: {email: email, password: password},  headers: {"Content-Type": "multipart/form-data"}})
             console.log(res.data)
             if(res.status = 200){
-                dispatch({
-                    type: set_user,
-                    user: res.data.email
-                })
-                setError(false)
-                navigate(-1)
+                setMobileNumber(res.data.mobile_number)
+                localStorage.setItem('session_token', res.data.session_token)
+                setVerify(true)
+                setLoginError(false)
             } 
         } catch(error){
-            setError(true)
+            setLoginError(true)
+        }
+    }
+
+    async function verifyAccessCode(e) {
+        e.preventDefault()
+        try {
+        const res = await axios({method:'post', url:'http://localhost:5000/2fa', data: {email: email, sms_code: entered_code, session_token: localStorage.getItem('session_token')},  headers: {"Content-Type": "multipart/form-data"}});
+        if (res.status = 200) {
+            dispatch({
+                type: set_user,
+                user: res.data.email
+            })
+            setVerifyError(false)
+            navigate(-1)
+        }} catch(error){
+            setVerifyError(true)
         }
     }
    
@@ -39,17 +57,30 @@ function Login() {
                 </div>
             </Link>
             <div className='login-body'>
-                <h1>Sign-In</h1>
-                {error && <span className="login-error">Sorry! Please enter a correct username and password</span>}
-                <div className='login-form'>
-                    <h5> E-mail address</h5>
-                    <input value={email} onChange= {(e) => setEmail(e.target.value)}/>
-                    <h5> Password </h5>
-                    <input type='password' value={password} onChange={(e) => setPassword(e.target.value)}/>
-                    <button type='submit'  className='login-sign-in' disabled={!email || !password} onClick={(e)=> signIn(e)}>Sign In</button>
-                </div>
-                <p>By signing in, you agree to Amazon's Conditions of Use and Privacy Notice.</p>
-                <button  className='login-create-account'>Create Your Amazon Account</button>
+                {verify?
+                    <div>
+                    <h1>Enter Access Code Sent to {mobile_number}</h1>
+                    <div className='login-form'>
+                        <h5>Access Code</h5>
+                        {verifyError && <span className="login-error">Sorry! The access code is incorrect</span>}
+                        <input value={entered_code} onChange= {(e) => setEnteredCode(e.target.value)}/>
+                        <button type='submit'  className='login-sign-in' disabled={!entered_code} onClick={(e)=> verifyAccessCode(e)}>Verify Access Code</button>
+                    </div></div>
+                    :
+                    <div>
+                    <h1>Sign-In</h1>
+                    {loginError && <span className="login-error">Sorry! Please enter a correct username and password</span>}
+                    <div className='login-form'>
+                        <h5> E-mail address</h5>
+                        <input value={email} onChange= {(e) => setEmail(e.target.value)}/>
+                        <h5> Password </h5>
+                        <input type='password' value={password} onChange={(e) => setPassword(e.target.value)}/>
+                        <button type='submit'  className='login-sign-in' disabled={!email || !password} onClick={(e)=> signIn(e)}>Sign In</button>
+                    </div>
+                    <p>By signing in, you agree to Amazon's Conditions of Use and Privacy Notice.</p>
+                    <button  className='login-create-account'>Create Your Amazon Account</button>
+                    </div>
+                }
             </div>
         </div>       
     )
