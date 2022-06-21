@@ -35,12 +35,11 @@ def twoFA():
 
     user = User.query.filter(User.email == email).first()
 
-    print(user.session_token, request.form['session_token'])
     if user.session_token != request.form['session_token']:
         return jsonify({'Error': 'Session is broken.'}), 400
 
     sms_code = user.sms_code
-    # sms_code = session.get('sms_code')
+    # TODO: sms_code = session.get('sms_code')
     if not sms_code:
         raise Exception("Broken")
 
