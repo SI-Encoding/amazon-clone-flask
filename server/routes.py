@@ -3,10 +3,18 @@ from app import *
 from controller import Controller
 
 from flask import jsonify, session, request, g
+import random
+from smscontroller import twilio_client
 
 ProductController = Controller(Product, db)
 UserController = Controller(User, db)
 OrderController = Controller(Order, db)
+
+characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
+
+def generate_session_token():
+    return "".join([random.choice(characters) for i in range(10)])
+
 
 @app.route('/products', methods=['GET'])
 def products():
@@ -20,6 +28,44 @@ def products():
 @app.route('/')
 def index():
     return jsonify({'success': True}), 200
+
+@app.route('/2fa', methods=['POST'])
+def twoFA():
+    email = request.form['email']
+
+    user = User.query.filter(User.email == email).first()
+
+    if user.session_token != request.form['session_token']:
+        return jsonify({'Error': 'Session is broken.'}), 400
+
+    sms_code = user.sms_code
+    # TODO: sms_code = session.get('sms_code')
+    if not sms_code:
+        raise Exception("Broken")
+
+    if request.form['sms_code'] == sms_code:
+        session['user_id'] = user.id
+        return jsonify({'Success': 'Successfully signed in as {user}.'.format(user=email), 'email': email}), 200
+    else:
+        return jsonify({'Error': 'SMS code is incorrect.'}), 401
+
+
+def generate_sms_code():
+    access_code = random.randint(10000, 99999)
+    return access_code
+
+def send_sms_code(mobile_number):
+    sms_code = generate_sms_code()
+
+    message = twilio_client.messages \
+        .create(
+            body="This is your access code: {access_code}".format(access_code=sms_code),
+            from_='+15076930648',
+            to=mobile_number
+    )
+
+    print(message.sid)
+    return sms_code
 
 @app.before_request
 def before_request():
@@ -41,8 +87,17 @@ def login():
         return jsonify({'Error': 'User {user} not found.'.format(user=email)}), 401
 
     if user.password == password:
-        session['user_id'] = user.id
-        return jsonify({'Success': 'Successfully signed in as {user}.'.format(user=email), 'email': email}), 200
+        mobile_number = user.mobile_number
+        access_code = send_sms_code(mobile_number)
+
+        # TODO: Figure out synchronization of backend session with front end...
+        session['sms_code'] = access_code
+
+        user.session_token = generate_session_token()
+        user.sms_code = session['sms_code']
+        db.session.commit()
+
+        return jsonify({'mobile_number': mobile_number, 'session_token': user.session_token})
     else:
         return jsonify({'Error': 'User {user} and password combination is incorrect.'.format(user=email)}), 401
 
