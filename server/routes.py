@@ -35,10 +35,9 @@ def login():
 
     username = request.form['username']
     password = request.form['password']
-
-    try:
-        user = User.query.filter(User.username==username).first()
-    except IndexError:
+   
+    user = User.query.filter(User.username==username).first()
+    if not user:
         return jsonify({'Error': 'User {user} not found.'.format(user=username)}), 401
 
     if user.password == password:
