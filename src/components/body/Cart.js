@@ -64,7 +64,28 @@ function Cart() {
       })
     }
 
-    function calculateTotal() {
+    async function clearFromCart(product) {
+        products[product.id].pop()
+        product_counter[product.id] -= 1
+        delete products[product.id]
+        delete product_counter[product.id]
+
+      dispatch({
+        type: set_products,
+        products: products
+    })
+      dispatch({
+        type: set_product_counter,
+        product_counter: product_counter
+    })
+    dispatch({
+      type: set_total_items,
+      total_items: --total_items
+    })
+    calculateTotal()
+  }
+
+    async function calculateTotal() {
       let total_for_product = 0;
       Object.entries(products).map(item => {
         total_for_product += item[1][0].price * item[1].length;
@@ -93,7 +114,8 @@ function Cart() {
           </div>      
         {/* needs if statement here when product is removed*/}
         {Object.entries(products).length !== 0 ? (Object.keys(products).map((key) => (
-        <div className='cart-product'>
+        products[key][0] &&
+        <div className='cart-product' key={products[key][0].id}>
           <img className='cart-product-image' src={products[key][0].name && require(`../../assets/${products[key][0].img}`)} alt={`${products[key][0].name}`}/>
           <div className='cart-product-info'>
             <div className="cart-product-info-header">
@@ -136,7 +158,7 @@ function Cart() {
                         -
                       </span>
                       : 
-                      <span className="cart-product-quantity-decrement" onClick={() => removeFromCart(products[key][0])}>
+                      <span className="cart-product-quantity-decrement" onClick={() => removeFromCart(products[key][0])} disabled={product_counter[key] === 1}>
                         -
                       </span>
                   }
@@ -153,7 +175,7 @@ function Cart() {
                 </div>
               </div>
               <hr className="cart-product-quantity-divider"/>
-              <span className="cart-product-quantity-delete">Delete</span>
+              <span className="cart-product-quantity-delete" onClick={() => clearFromCart(products[key][0])}>Delete</span>
             </div>
           </div>
         </div>
