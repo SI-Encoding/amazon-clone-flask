@@ -2,6 +2,7 @@ import React, {useEffect} from 'react'
 import './Cart.css'
 import {set_product_counter, set_products, set_total_cost, set_total_items} from '../../rootReducer'
 import {useSelector, useDispatch} from 'react-redux'
+import {Link} from 'react-router-dom'
 
 function Cart() {
     const dispatch = useDispatch()
@@ -206,7 +207,7 @@ function Cart() {
                 </span>
             </span>
             <span style={{marginLeft: "0", marginRight: "auto", paddingLeft: "5px"}}></span>        
-            <button >Proceed to checkout</button>  
+            <button ><Link to="/checkout" style={{textDecoration:'none'}}>Proceed to checkout</Link></button>  
           </div>
         </div>
       </div>
