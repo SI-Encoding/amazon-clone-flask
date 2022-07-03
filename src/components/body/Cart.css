@@ -253,6 +253,7 @@
     padding-left: 3px; 
     font-family: sans-serif;
     margin-top: 10px;
+    cursor: pointer;
 }
 
 .cart-container-empty {

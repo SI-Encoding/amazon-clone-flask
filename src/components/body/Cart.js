@@ -79,12 +79,12 @@ function Cart() {
         type: set_product_counter,
         product_counter: product_counter
     })
-    dispatch({
-      type: set_total_items,
-      total_items: --total_items
-    })
-    calculateTotal()
-  }
+      dispatch({
+        type: set_total_items,
+        total_items: --total_items
+      })
+      calculateTotal()
+    }
 
     async function calculateTotal() {
       let total_for_product = 0;
