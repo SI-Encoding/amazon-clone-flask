@@ -114,3 +114,26 @@
     font-weight: 500;
     margin-left: 10px;
 }
+
+.subtotal-right-items {
+    display: flex;
+}
+
+.subtotal-right-items-shipping {
+    margin-top: 20px;
+    margin-left: 20px;
+}
+
+.subtotal-right-tax {
+    margin-top: 20px;
+    margin-left: 20px;
+}
+
+.subtotal-right-total {
+    margin-top: 20px;
+    margin-left: 10px;
+}
+
+.subtotal-right-margin {
+    margin-left: auto;
+}

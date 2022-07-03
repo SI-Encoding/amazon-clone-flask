@@ -34,6 +34,32 @@ function Checkout() {
         <div className='subtotal-right'>
             <button className="checkout-button-2">Place Your Order</button>  
         </div>
+        <div>
+            <span className="checkout-list-steps">Order Summary</span>
+            <div className="subtotal-right-items-shipping">
+                <div className="subtotal-right-items">
+                    <span>Items ({total_items}):</span>
+                    <span className="subtotal-right-margin">${total_cost}</span>
+                </div>
+                <div className="subtotal-right-items">
+                    <span>Shipping & Handling:</span>
+                    <span className="subtotal-right-margin">$0.00</span>
+                </div>
+            </div>
+            <div className="subtotal-right-tax">
+                <div className="subtotal-right-items">
+                    <span>Total before tax:</span>
+                    <span className="subtotal-right-margin">$0.00</span>
+                </div>
+                <div className="subtotal-right-items">
+                    <span>Estimated tax to be collected:</span>
+                    <span className="subtotal-right-margin">$0.00</span>
+                </div>
+            </div>
+            <div className="subtotal-right-total">
+                <span className="checkout-total">Order Total: ${total_cost} </span>
+            </div>
+        </div>
     </div>
     </div>
     </>
