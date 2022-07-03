@@ -1,6 +1,7 @@
 import React from 'react'
 import './Checkout.css'
 import {useSelector} from 'react-redux'
+import {Link} from 'react-router-dom'
 
 function Checkout() {
     const total_items = useSelector(state => state.total_items)
@@ -9,7 +10,7 @@ function Checkout() {
   return (
     <>
     <div className="checkout-container">
-        <img src={require('../../assets/amazon-logo-login.png')} style={{marginLeft: "250px"}} alt="Amazon-logo"/>
+        <Link to="/"><img src={require('../../assets/amazon-logo-login.png')} style={{marginLeft: "250px"}} alt="Amazon-logo"/></Link>
         <span className="checkout-span">.ca</span>
         <h1 className="checkout-heading">Checkout (<span className="checkout-items">{total_items} items</span>)</h1>   
     </div>

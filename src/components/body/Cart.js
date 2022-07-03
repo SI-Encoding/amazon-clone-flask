@@ -2,7 +2,7 @@ import React, {useEffect} from 'react'
 import './Cart.css'
 import {set_product_counter, set_products, set_total_cost, set_total_items} from '../../rootReducer'
 import {useSelector, useDispatch} from 'react-redux'
-import {Link} from 'react-router-dom'
+import {Link, useNavigate} from 'react-router-dom'
 
 function Cart() {
     const dispatch = useDispatch()
@@ -10,6 +10,7 @@ function Cart() {
     let total_items = useSelector(state => state.total_items)
     let product_counter = useSelector(state => state.product_counter)
     let total_cost = useSelector(state => state.total_cost)
+    const navigate = useNavigate();
 
     async function addToCart(product) {
         dispatch({
@@ -229,7 +230,7 @@ function Cart() {
                 </span>
             </span>
             <span style={{marginLeft: "0", marginRight: "auto", paddingLeft: "5px"}}></span>        
-            <button ><Link to="/checkout" style={{textDecoration:'none'}}>Proceed to checkout</Link></button>  
+            <button onClick={()=> navigate('/checkout')}><Link to="/checkout" style={{textDecoration:'none'}}>Proceed to checkout</Link></button>  
           </div>
         </div>
       </div>
