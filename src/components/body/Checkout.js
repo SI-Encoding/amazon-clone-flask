@@ -2,7 +2,7 @@ import React,{useEffect} from 'react'
 import './Checkout.css'
 import {set_product_counter, set_products, set_total_cost, set_total_items} from '../../rootReducer'
 import {useSelector, useDispatch} from 'react-redux'
-import {Link} from 'react-router-dom'
+import {Link, useNavigate} from 'react-router-dom'
 
 function Checkout() {
     let total_items = useSelector(state => state.total_items)
@@ -10,6 +10,7 @@ function Checkout() {
     let product_counter = useSelector(state => state.product_counter)
     let total_cost = useSelector(state => state.total_cost)
     const dispatch = useDispatch()
+    const navigate = useNavigate()
 
     async function addToCart(product) {
         dispatch({
@@ -81,10 +82,10 @@ function Checkout() {
       dispatch({
         type: set_total_items,
         total_items: --total_items
-      })
+    })
       calculateTotal()
     }
-    
+
     async function calculateTotal() {
         let total_for_product = 0;
         Object.entries(products).map(item => {
@@ -112,8 +113,22 @@ function Checkout() {
             <div className="checkout-part">  
                 <span className="checkout-list">1</span> <span className="checkout-list-steps">Shipping address</span> <span className="checkout-username">username lastname</span>
             </div> 
-            <div className="checkout-part">
+            <div className="checkout-part" style={{paddingBottom: "10px"}}>
                 <span className="checkout-list">2</span> <span className="checkout-list-steps">Payment method</span> <span className="checkout-mastercard" style={{marginLeft: "30px"}}>MasterCard</span>
+                {/* Enter credit card */}
+                <div className="checkout-card-label">
+                    <label for="card-number" className="checkout-card-information">Card Information</label>
+                </div>
+                <form autocomplete="off">
+                    <div className="checkout-card-number-input">
+                        <input type="text" placeholder="Card Number" id="card-number"/>
+                        <img src={require('../../assets/amazon-card-icon.png')} style={{width: "7%", marginLeft: "10px"}}/>
+                    </div>
+                    <div className="checkout-card-number-input">
+                        <input type="text" placeholder="MM/YY" id="card-expire-date"/>
+                        <input type="text" placeholder="CVC" id="card-cvc"/>
+                    </div>
+                </form>
             </div> 
             <div className="checkout-part">
                 <span className="checkout-list">3</span> <span className="checkout-list-steps">Review items and shipping</span> <span></span>
@@ -202,26 +217,22 @@ function Checkout() {
                 </a>
               </div>
               <div className="cart-container-empty-registration"> 
-                <button className="cart-empty-signin">
-                  Sign in to your account
+                <button className="cart-empty-signin" onClick={()=> navigate("/")}>
+                  return home
                 </button> 
-              <div className="cart-empty-divider"></div>
-                <button className="cart-empty-signup">
-                  Sign up now
-                </button>
             </div>
           </div> 
         </div>
         </div>
         )
         }
-        <div>
+            <div>
                 <button className="checkout-button">Place Your Order</button>
                 <span className="checkout-total">Order Total: ${total_cost} </span>
             </div>
         </div>
         <div className='checkout-right-container'>
-            <div className='subtotal-right'>
+            <div className='subtotal-right' style={{borderBottom: "1px solid lightgray", paddingBottom: "0px"}}>
                 <button className="checkout-button-2">Place Your Order</button>  
             </div>
             <div>

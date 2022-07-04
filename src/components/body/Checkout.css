@@ -60,6 +60,22 @@
     font-weight: 700;
 }
 
+.checkout-card-information {
+    color: #838383;
+    font-weight: 500;
+    margin-left: 30px;
+    margin-top: 10px;
+}
+
+.checkout-card-label {
+    margin-top: 10px;
+}
+
+.checkout-card-number-input {
+    margin-top: 10px;
+    margin-left: 15px;
+}
+
 .checkout-right-container {
     margin-left: 20px;
 }
@@ -104,7 +120,7 @@
 }
 
 .checkout-part {
-    height: 110px; 
+    height: 125px; 
     border-bottom: 1px solid lightgray;
 }
 
