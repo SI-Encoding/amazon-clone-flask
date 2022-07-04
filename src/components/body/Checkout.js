@@ -1,16 +1,16 @@
-import React, {useEffect} from 'react'
-import './Cart.css'
+import React,{useEffect} from 'react'
+import './Checkout.css'
 import {set_product_counter, set_products, set_total_cost, set_total_items} from '../../rootReducer'
 import {useSelector, useDispatch} from 'react-redux'
 import {Link, useNavigate} from 'react-router-dom'
 
-function Cart() {
-    const dispatch = useDispatch()
-    let products = useSelector(state => state.products)
+function Checkout() {
     let total_items = useSelector(state => state.total_items)
+    let products = useSelector(state => state.products)
     let product_counter = useSelector(state => state.product_counter)
     let total_cost = useSelector(state => state.total_cost)
-    const navigate = useNavigate();
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
 
     async function addToCart(product) {
         dispatch({
@@ -82,39 +82,58 @@ function Cart() {
       dispatch({
         type: set_total_items,
         total_items: --total_items
-      })
+    })
       calculateTotal()
     }
 
     async function calculateTotal() {
-      let total_for_product = 0;
-      Object.entries(products).map(item => {
-        total_for_product += item[1][0].price * item[1].length;
-      })
-      dispatch({
-        type: set_total_cost,
-        total_cost: total_for_product
-      })
-    }
-
+        let total_for_product = 0;
+        Object.entries(products).map(item => {
+          total_for_product += item[1][0].price * item[1].length;
+        })
+        dispatch({
+          type: set_total_cost,
+          total_cost: total_for_product
+        })
+      }
+  
     useEffect(()=>{
-      calculateTotal()
+        calculateTotal()
     },[product_counter,total_cost,products])
 
   return (
-    <div className="cart-container">       
-      <div className="cart-body">
-        <div className='cart-container-products'>
-          <div className="cart-container-shopping-cart">
-            <h2 className='cart-title-shopping-cart'>
-              Shopping Cart
-            </h2>
-            <span className="cart-title-price">
-              Price
-            </span>
-          </div>      
-        {/* needs if statement here when product is removed*/}
-        {Object.entries(products).length !== 0 ? (Object.keys(products).map((key) => (
+    <>
+        <div className="checkout-container">
+            <Link to="/"><img src={require('../../assets/amazon-logo-login.png')} style={{marginLeft: "250px"}} alt="Amazon-logo"/></Link>
+            <span className="checkout-span">.ca</span>
+            <h1 className="checkout-heading">Checkout (<span className="checkout-items">{total_items} items</span>)</h1>   
+        </div>
+        <div className="checkout-body">
+        <div className="checkout-body-container">
+            <div className="checkout-part">  
+                <span className="checkout-list">1</span> <span className="checkout-list-steps">Shipping address</span> <span className="checkout-username">username lastname</span>
+            </div> 
+            <div className="checkout-part" style={{paddingBottom: "10px"}}>
+                <span className="checkout-list">2</span> <span className="checkout-list-steps">Payment method</span> <span className="checkout-mastercard" style={{marginLeft: "30px"}}>MasterCard</span>
+                {/* Enter credit card */}
+                <div className="checkout-card-label">
+                    <label for="card-number" className="checkout-card-information">Card Information</label>
+                </div>
+                <form autocomplete="off">
+                    <div className="checkout-card-number-input">
+                        <input type="text" placeholder="Card Number" id="card-number"/>
+                        <img src={require('../../assets/amazon-card-icon.png')} style={{width: "7%", marginLeft: "10px"}}/>
+                    </div>
+                    <div className="checkout-card-number-input">
+                        <input type="text" placeholder="MM/YY" id="card-expire-date"/>
+                        <input type="text" placeholder="CVC" id="card-cvc"/>
+                    </div>
+                </form>
+            </div> 
+            <div className="checkout-part">
+                <span className="checkout-list">3</span> <span className="checkout-list-steps">Review items and shipping</span> <span></span>
+            </div>
+            {Object.entries(products).length !== 0 ? (Object.keys(products).map((key) => (
         products[key][0] &&
         <div className='cart-product' key={products[key][0].id}>
           <img className='cart-product-image' src={products[key][0].name && require(`../../assets/${products[key][0].img}`)} alt={`${products[key][0].name}`}/>
@@ -183,7 +202,7 @@ function Cart() {
         )
         )
         )
-        :    
+        :  
         (
         <div className="cart-container-empty">
           <div className="cart-empty" >
@@ -198,44 +217,54 @@ function Cart() {
                 </a>
               </div>
               <div className="cart-container-empty-registration"> 
-                <button className="cart-empty-signin">
-                  Sign in to your account
+                <button className="cart-empty-signin" onClick={()=> navigate("/")}>
+                  return home
                 </button> 
-              <div className="cart-empty-divider"></div>
-                <button className="cart-empty-signup">
-                  Sign up now
-                </button>
             </div>
           </div> 
         </div>
         </div>
         )
-        } 
-        <div className="cart-container-subtotal">
-          <span className="cart-container-subtotal">
-            Subtotal ({total_items} items):
-            <span className="cart-subtotal">
-                ${(total_cost)}
-              </span>
-          </span>
-          <span style={{marginLeft: "0", marginRight: "22px", paddingLeft: "5px"}}></span> 
-        </div>    
+        }
+            <div>
+                <button className="checkout-button">Place Your Order</button>
+                <span className="checkout-total">Order Total: ${total_cost} </span>
+            </div>
         </div>
-        <div className='cart-container-subtotal-checkout'>
-          <div className='cart-subtotal-checkout'>
-            <span className="cart-container-subtotal">
-              Subtotal ({total_items} items):
-                <span className="cart-subtotal">
-                  ${(total_cost)}
-                </span>
-            </span>
-            <span style={{marginLeft: "0", marginRight: "auto", paddingLeft: "5px"}}></span>        
-            <button onClick={()=> navigate('/checkout')}><Link to="/checkout" style={{textDecoration:'none'}}>Proceed to checkout</Link></button>  
-          </div>
+        <div className='checkout-right-container'>
+            <div className='subtotal-right' style={{borderBottom: "1px solid lightgray", paddingBottom: "0px"}}>
+                <button className="checkout-button-2">Place Your Order</button>  
+            </div>
+            <div>
+                <span className="checkout-list-steps">Order Summary</span>
+                <div className="subtotal-right-items-shipping">
+                    <div className="subtotal-right-items">
+                        <span>Items ({total_items}):</span>
+                        <span className="subtotal-right-margin">${total_cost}</span>
+                    </div>
+                    <div className="subtotal-right-items">
+                        <span>Shipping & Handling:</span>
+                        <span className="subtotal-right-margin">$0.00</span>
+                    </div>
+                </div>
+                <div className="subtotal-right-tax">
+                    <div className="subtotal-right-items">
+                        <span>Total before tax:</span>
+                        <span className="subtotal-right-margin">$0.00</span>
+                    </div>
+                    <div className="subtotal-right-items">
+                        <span>Estimated tax to be collected:</span>
+                        <span className="subtotal-right-margin">$0.00</span>
+                    </div>
+                </div>
+                <div className="subtotal-right-total">
+                    <span className="checkout-total">Order Total: ${total_cost} </span>
+                </div>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
+    </>
   )
 }
 
-export default Cart
+export default Checkout
