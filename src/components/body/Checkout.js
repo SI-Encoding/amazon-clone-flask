@@ -3,6 +3,7 @@ import './Checkout.css'
 import {set_product_counter, set_products, set_total_cost, set_total_items} from '../../rootReducer'
 import {useSelector, useDispatch} from 'react-redux'
 import {Link, useNavigate} from 'react-router-dom'
+import axios from 'axios'
 
 function Checkout() {
     let total_items = useSelector(state => state.total_items)
@@ -103,6 +104,18 @@ function Checkout() {
     useEffect(()=>{
         calculateTotal()
     },[product_counter,total_cost,products])
+
+    async function checkout(e) {
+      e.preventDefault()
+      if (cardNumber.length !== 0 && expireDate !== 0 && cvc !== 0) {
+        const res = await axios({method:'post', url:'http://localhost:5000/charge', data: {amount: total_cost, token: "tok_visa"},  headers: {"Content-Type": "application/json"}})
+          if (res.status == 200) {
+            alert("Purchase has been successful")
+          } else {
+            console.log(res.status)
+          }
+      }
+    }
 
   return (
     <>
@@ -253,13 +266,13 @@ function Checkout() {
         )
         }
             <div>
-                <button className="checkout-button">Place Your Order</button>
+                <button className="checkout-button" onClick={(e) => checkout(e)}>Place Your Order</button>
                 <span className="checkout-total">Order Total: ${total_cost} </span>
             </div>
         </div>
         <div className='checkout-right-container'>
             <div className='subtotal-right' style={{borderBottom: "1px solid lightgray", paddingBottom: "0px"}}>
-                <button className="checkout-button-2">Place Your Order</button>  
+                <button className="checkout-button-2" onClick={(e) => checkout(e)}>Place Your Order</button>  
             </div>
             <div>
                 <span className="checkout-list-steps">Order Summary</span>

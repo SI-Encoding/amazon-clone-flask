@@ -5,12 +5,15 @@ from controller import Controller
 from flask import jsonify, session, request, g
 import random
 from smscontroller import twilio_client
+from settings import STRIPE_SECRET_KEY
+import stripe
 
 ProductController = Controller(Product, db)
 UserController = Controller(User, db)
 OrderController = Controller(Order, db)
 
 characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
+stripe.api_key = STRIPE_SECRET_KEY
 
 def generate_session_token():
     return "".join([random.choice(characters) for i in range(10)])
@@ -124,5 +127,25 @@ def product():
     response_object['data'] = ProductController.get_one(id=product_id).json()
     return jsonify(response_object), 200, {'Access-Control-Allow-Origin': '*'}
   
-
-
+@app.route('/charge', methods=['POST'])
+def create_charge():
+    post_data = request.get_json()
+    amount = int(post_data.get('amount'))
+    charge = stripe.Charge.create(
+        amount=amount,
+        currency='usd',
+        source=post_data.get('token'),
+        description= 'Service Plan'
+    )
+    if charge['status'] == "succeeded":
+        response_object = {
+            'status': "succeeded",
+            'charge': charge
+        }
+        return jsonify(response_object), 200, {'Access-Control-Allow-Origin': '*'}
+    else:
+        response_object = {
+            'status': 'false',
+            'charge': 0
+        }
+        return jsonify(response_object), 400, {'Access-Control-Allow-Origin': '*'}
