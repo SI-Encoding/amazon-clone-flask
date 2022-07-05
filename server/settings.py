@@ -14,3 +14,5 @@ SECRET_KEY = os.environ.get("SECRET_KEY")
 
 TWILIO_ACCOUNT_SID = os.environ.get("TWILIO_ACCOUNT_SID")
 TWILIO_AUTH_TOKEN = os.environ.get('TWILIO_AUTH_TOKEN')
+
+STRIPE_API_KEY = os.environ.get('STRIPE_API_KEY')
