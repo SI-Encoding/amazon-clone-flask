@@ -3,6 +3,7 @@ import './Product.css'
 import {useSelector, useDispatch} from 'react-redux'
 import axios from 'axios'
 import {set_total_items, set_products, set_product_counter} from '../../rootReducer'
+import {Link} from 'react-router-dom'
 
 function Product() {
   const productId = useSelector(state => state.selectedProduct)
@@ -96,7 +97,7 @@ function Product() {
           <span>Quantity:</span>
           <select style={{border: "1px solid #DDD", borderRadius: "4px 4px 4px 4px", padding: "3px"}}>{[1,2,3,4,5].slice(0, displayProduct.inventory < 5 ? displayProduct.inventory : 5).map(opt => (<option value={opt}>{opt}</option>)) }</select>
           <button onClick={(e)=> addToCart(displayProduct, e)}>Add to Cart</button>
-          <button style={{background: "#FFA41C" , borderColor: "#FF8F00"}}>Buy now</button>
+          <Link to='/checkout' style={{textDecoration: "none"}}><button style={{background: "#FFA41C" , borderColor: "#FF8F00"}}>Buy now</button></Link>
         </div>
       </div>
     </div>
