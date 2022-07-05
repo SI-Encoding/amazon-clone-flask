@@ -1,0 +1,13 @@
+services:
+  api: 
+    build:
+      context: .
+      dockerfile: Dockerfile.api
+    image: amazon-clone-flask
+  client: 
+    build:
+      context: .
+      dockerfile: Dockerfile.client
+    image: amazon-clone-flask-client
+    port:
+      - "3000:80"
