@@ -2,6 +2,7 @@ import React, {useEffect} from 'react'
 import './Cart.css'
 import {set_product_counter, set_products, set_total_cost, set_total_items} from '../../rootReducer'
 import {useSelector, useDispatch} from 'react-redux'
+import {Link, useNavigate} from 'react-router-dom'
 
 function Cart() {
     const dispatch = useDispatch()
@@ -9,6 +10,7 @@ function Cart() {
     let total_items = useSelector(state => state.total_items)
     let product_counter = useSelector(state => state.product_counter)
     let total_cost = useSelector(state => state.total_cost)
+    const navigate = useNavigate();
 
     async function addToCart(product) {
         dispatch({
@@ -63,7 +65,28 @@ function Cart() {
       })
     }
 
-    function calculateTotal() {
+    async function clearFromCart(product) {
+        products[product.id].pop()
+        product_counter[product.id] -= 1
+        delete products[product.id]
+        delete product_counter[product.id]
+
+      dispatch({
+        type: set_products,
+        products: products
+    })
+      dispatch({
+        type: set_product_counter,
+        product_counter: product_counter
+    })
+      dispatch({
+        type: set_total_items,
+        total_items: --total_items
+      })
+      calculateTotal()
+    }
+
+    async function calculateTotal() {
       let total_for_product = 0;
       Object.entries(products).map(item => {
         total_for_product += item[1][0].price * item[1].length;
@@ -92,7 +115,8 @@ function Cart() {
           </div>      
         {/* needs if statement here when product is removed*/}
         {Object.entries(products).length !== 0 ? (Object.keys(products).map((key) => (
-        <div className='cart-product'>
+        products[key][0] &&
+        <div className='cart-product' key={products[key][0].id}>
           <img className='cart-product-image' src={products[key][0].name && require(`../../assets/${products[key][0].img}`)} alt={`${products[key][0].name}`}/>
           <div className='cart-product-info'>
             <div className="cart-product-info-header">
@@ -135,7 +159,7 @@ function Cart() {
                         -
                       </span>
                       : 
-                      <span className="cart-product-quantity-decrement" onClick={() => removeFromCart(products[key][0])}>
+                      <span className="cart-product-quantity-decrement" onClick={() => removeFromCart(products[key][0])} disabled={product_counter[key] === 1}>
                         -
                       </span>
                   }
@@ -152,7 +176,7 @@ function Cart() {
                 </div>
               </div>
               <hr className="cart-product-quantity-divider"/>
-              <span className="cart-product-quantity-delete">Delete</span>
+              <span className="cart-product-quantity-delete" onClick={() => clearFromCart(products[key][0])}>Delete</span>
             </div>
           </div>
         </div>
@@ -206,7 +230,7 @@ function Cart() {
                 </span>
             </span>
             <span style={{marginLeft: "0", marginRight: "auto", paddingLeft: "5px"}}></span>        
-            <button >Proceed to checkout</button>  
+            <button onClick={()=> navigate('/checkout')}><Link to="/checkout" style={{textDecoration:'none'}}>Proceed to checkout</Link></button>  
           </div>
         </div>
       </div>

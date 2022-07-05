@@ -2,8 +2,8 @@ import React,{useEffect, useState} from 'react'
 import './Product.css'
 import {useSelector, useDispatch} from 'react-redux'
 import axios from 'axios'
-import {set_total_items, set_products, set_product_counter} from '../../rootReducer'
-import {Link} from 'react-router-dom'
+import {set_total_items, set_products, set_product_counter, set_total_cost} from '../../rootReducer'
+import {useNavigate} from 'react-router-dom'
 
 function Product() {
   const productId = useSelector(state => state.selectedProduct)
@@ -11,6 +11,7 @@ function Product() {
   let total_items = useSelector(state => state.total_items)
   let product_counter = useSelector(state => state.product_counter)
   const dispatch = useDispatch()
+  const navigate = useNavigate();
   const [displayProduct, setDisplayProduct] = useState({})
 
   useEffect(()=>{ 
@@ -28,9 +29,9 @@ function Product() {
   console.log(displayProduct)
 
 
-    async function addMultiToCart(product, e) {
+  async function addMultiToCart(product, e) {
 
-    }
+  }
 
   async function addToCart(product, e) {
       // TODO: Total quantity cap...
@@ -42,6 +43,18 @@ function Product() {
           })
           updateToCart(product)
       }
+  }
+
+  async function CheckoutToCart(product, e) {
+    let q = e.target.previousSibling.previousSibling.value;
+    for (var i = 0; i < parseInt(q); i++) {
+        dispatch({
+          type: set_total_items,
+          total_items: ++total_items
+        })
+        updateToCart(product)
+    }
+    calculateTotal()
   }
 
   async function updateToCart(product) {
@@ -64,6 +77,17 @@ function Product() {
   })
 }
 
+async function calculateTotal() {
+  let total_for_product = 0;
+  Object.entries(products).map(item => {
+    total_for_product += item[1][0].price * item[1].length;
+  })
+  dispatch({
+    type: set_total_cost,
+    total_cost: total_for_product
+  })
+}
+
   return (
     <div className="product-left-and-right" >
       <div className='product-main-container'>
@@ -76,7 +100,7 @@ function Product() {
               </h1>
             </div>    
             <div style={{marginTop:"15px"}}>    
-              <span className="product-product-subtotal" style={{marginLeft: "0", marginRight: "22px", paddingLeft: "5px"}}> <strong>${displayProduct.price / 100}</strong></span>
+              <span className="product-product-subtotal" style={{marginLeft: "0", marginRight: "22px", paddingLeft: "5px"}}> <strong>${displayProduct.price}</strong></span>
               <div style={{borderBottom: "1px solid #e7e7e7", marginTop: "20px"}}></div> 
             </div>
             <div>    
@@ -97,7 +121,7 @@ function Product() {
           <span>Quantity:</span>
           <select style={{border: "1px solid #DDD", borderRadius: "4px 4px 4px 4px", padding: "3px"}}>{[1,2,3,4,5].slice(0, displayProduct.inventory < 5 ? displayProduct.inventory : 5).map(opt => (<option value={opt}>{opt}</option>)) }</select>
           <button onClick={(e)=> addToCart(displayProduct, e)}>Add to Cart</button>
-          <Link to='/checkout' style={{textDecoration: "none"}}><button style={{background: "#FFA41C" , borderColor: "#FF8F00"}}>Buy now</button></Link>
+          <button style={{background: "#FFA41C" , borderColor: "#FF8F00"}} onClick={(e)=> {CheckoutToCart(displayProduct, e); navigate('/checkout')}}>Buy now</button>
         </div>
       </div>
     </div>
