@@ -1,0 +1,16 @@
+FROM python:3.9
+WORKDIR /amazon-clone-flask
+COPY ./server/* ./server
+COPY ./requirements.txt . 
+RUN pip3 install -r ./requirements.txt
+ENV PGUSER postgres
+ENV PGPASS 123
+ENV PGHOST localhost
+ENV PGDB amazonclone
+ENV SECRET_KEY ghfhdhkgjgkgjf
+EXPOSE 5000
+WORKDIR /amazon-clone-flask/server
+#RUN pip3 install python-dotenv
+#RUN pip3 install flask_sqlalchemy
+CMD ["gunicorn", "-b", ":5000", "server:app"]
+#CMD ["bash"]
