@@ -10,6 +10,7 @@ function Checkout() {
     let products = useSelector(state => state.products)
     let product_counter = useSelector(state => state.product_counter)
     let total_cost = useSelector(state => state.total_cost)
+    let user = useSelector(state => state.user)
     const [cardNumber, setCardNumber] = useState('')
     const [expireDate, setExpireDate] = useState('')
     const [cvc, setCvc] = useState('')
@@ -23,7 +24,7 @@ function Checkout() {
         })
         incrementCart(product)
         calculateTotal()
-      }
+    }
 
     async function removeFromCart(product) {
         dispatch({
@@ -32,7 +33,7 @@ function Checkout() {
         })
         decrementCart(product)
         calculateTotal()
-      }
+    }
 
     async function incrementCart(product) {
         if(!(product.id in products)) {
@@ -75,19 +76,19 @@ function Checkout() {
         delete products[product.id]
         delete product_counter[product.id]
 
-      dispatch({
-        type: set_products,
-        products: products
-    })
-      dispatch({
-        type: set_product_counter,
-        product_counter: product_counter
-    })
-      dispatch({
-        type: set_total_items,
-        total_items: --total_items
-    })
-      calculateTotal()
+        dispatch({
+          type: set_products,
+          products: products
+      })
+        dispatch({
+          type: set_product_counter,
+          product_counter: product_counter
+      })
+        dispatch({
+          type: set_total_items,
+          total_items: --total_items
+      })
+        calculateTotal()
     }
 
     async function calculateTotal() {
@@ -99,8 +100,23 @@ function Checkout() {
           type: set_total_cost,
           total_cost: total_for_product
         })
-      }
+    }
   
+    async function emptyCart() {
+        dispatch({
+          type: set_products,
+          products: {}
+      })
+        dispatch({
+          type: set_product_counter,
+          product_counter: {}
+      })
+        dispatch({
+          type: set_total_items,
+          total_items: 0
+      })
+    }
+
     useEffect(()=>{
         calculateTotal()
     },[product_counter,total_cost,products])
@@ -111,6 +127,14 @@ function Checkout() {
         const res = await axios({method:'post', url:'http://localhost:5000/charge', data: {amount: total_cost, token: "tok_visa"},  headers: {"Content-Type": "application/json"}})
           if (res.status == 200) {
             alert("Purchase has been successful")
+            console.log(products)
+            const res = await axios({method:'post', url:'http://localhost:5000/order', data: {products: products, user_id: 1},  headers: {"Content-Type": "application/json"}})
+            .then((res)=> {
+              console.log("what", res)
+            emptyCart()
+            navigate("/")
+            
+            }).catch(err => console.log(err)) 
           } else {
             console.log(res.status)
           }

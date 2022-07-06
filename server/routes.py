@@ -109,15 +109,19 @@ def get_order():
     response_object = {'status': 'success'}
     order_id = request.args.get('order_id')
     response_object['data'] = OrderController.get_one(id=order_id).json()
-    return jsonify(response_object), 200, {'Access-Control-Allow-Origin': ''}
+    return jsonify(response_object), 200, {'Access-Control-Allow-Origin': '*'}
 
 @app.route('/order', methods=['POST'])
 def post_order():
     response_object = {'status': 'success'}
     post_data = request.get_json()
-    OrderController.add_one(**post_data)
+    products_to_add = []
+    for product_id in post_data['products']:
+        product = ProductController.get_one(id=product_id)
+        products_to_add.append(product)
+    OrderController.add_one(products_to_add, post_data['user_id'])
     response_object['data'] = 'Order added!'
-    return jsonify(response_object), 200, {'Access-Control-Allow-Origin': ''}
+    return jsonify(response_object), 200, {'Access-Control-Allow-Origin': '*'}
 
 @app.route('/product', methods=['GET'])
 def product():
