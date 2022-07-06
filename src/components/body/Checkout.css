@@ -74,6 +74,12 @@
 .checkout-card-number-input {
     margin-top: 10px;
     margin-left: 15px;
+    display: flex;
+}
+
+.checkout-input {
+    padding: 0px 10px;
+    height: 33px;
 }
 
 .checkout-right-container {
