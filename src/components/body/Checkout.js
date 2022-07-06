@@ -130,10 +130,8 @@ function Checkout() {
             console.log(products)
             const res = await axios({method:'post', url:'http://localhost:5000/order', data: {products: products, user_id: 1},  headers: {"Content-Type": "application/json"}})
             .then((res)=> {
-              console.log("what", res)
-            emptyCart()
-            navigate("/")
-            
+              emptyCart()
+              navigate("/")
             }).catch(err => console.log(err)) 
           } else {
             console.log(res.status)
