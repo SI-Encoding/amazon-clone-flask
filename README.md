@@ -1,7 +1,9 @@
 # Amazon-clone
 This is an web application done using React and Flask.
 
-## To setup the backend under server directory
+## To deploy the entire thing (via four integrated Docker containers):
+1. docker-compose-up
+
 
 ### How to install the needed dependencies
 
