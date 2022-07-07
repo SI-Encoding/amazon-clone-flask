@@ -128,9 +128,10 @@ function Checkout() {
           if (res.status == 200) {
             alert("Purchase has been successful")
             console.log(products)
-            const res = await axios({method:'post', url:'http://localhost:5000/order', data: {products: products, user_id: 1},  headers: {"Content-Type": "application/json"}})
+            const res = await axios({method:'post', url:'http://localhost:5000/order', data: {products: products, user_id: user.userId},  headers: {"Content-Type": "application/json"}})
             .then((res)=> {
               emptyCart()
+
               navigate("/")
             }).catch(err => console.log(err)) 
           } else {
@@ -149,9 +150,12 @@ function Checkout() {
         <div className="checkout-body">
         <div className="checkout-body-container">
             <div className="checkout-part">  
-                <span className="checkout-list">1</span> <span className="checkout-list-steps">Shipping address</span> <span className="checkout-username">username lastname</span>
+                <span className="checkout-list">1</span> <span className="checkout-list-steps">Shipping address</span> <span className="checkout-username">{user.firstName} {user.lastName}</span>
+                <div className="checkout-address">
+                    <label className="checkout-card-information">{user.address}</label>
+                </div>
             </div> 
-            <div className="checkout-part" style={{paddingBottom: "75px"}}>
+            <div className="checkout-part" style={{paddingBottom: "125px"}}>
                 <span className="checkout-list">2</span> <span className="checkout-list-steps">Payment method</span> <span className="checkout-mastercard" style={{marginLeft: "30px"}}>MasterCard</span>
                 {/* Enter credit card */}
                 <div className="checkout-card-label">

@@ -71,6 +71,12 @@
     margin-top: 10px;
 }
 
+.checkout-address {
+    color: #838383;
+    font-weight: 500;
+    margin-top: 10px;
+}
+
 .checkout-card-number-input {
     margin-top: 10px;
     margin-left: 15px;
@@ -126,7 +132,7 @@
 }
 
 .checkout-part {
-    height: 125px; 
+    height: 75px; 
     border-bottom: 1px solid lightgray;
 }
 

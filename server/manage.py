@@ -4,14 +4,14 @@ from app import app
 
 from models import db
 
+from settings import MY_PHONE_NUMBER
 
 cli = FlaskGroup(app)
-
 
 @cli.command("create_test_user")
 def create_test_user():
     from models import User
-    db.session.add(User(email='randomperson@yahoo.com', password='password', mobile_number='+16041111111'))
+    db.session.add(User(first_name = "first", last_name = "last", email='123@m.com', password='123', mobile_number=MY_PHONE_NUMBER, address= "City YTR937"))
     db.session.commit()
 
 

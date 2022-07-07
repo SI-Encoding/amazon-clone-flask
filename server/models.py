@@ -1,4 +1,5 @@
 from app import db
+from werkzeug.security import generate_password_hash, check_password_hash
 
 order_product_association_table = db.Table(
 	"order_product_association",
@@ -16,31 +17,45 @@ class User(db.Model):
     mobile_number = db.Column(db.Text)
     session_token = db.Column(db.Text)
     sms_code = db.Column(db.Text)
+    first_name = db.Column(db.Text)
+    last_name = db.Column(db.Text)
+    address = db.Column(db.Text)
     orders = db.relationship("Order", backref='user', lazy='dynamic')
 
-    def __init__(self,email: str, password: str, mobile_number: str, orders: list = []):
+    def __init__(self, first_name: str, last_name: str, email: str, password: str, mobile_number: str, address: str, orders: list = []):
+        self.first_name = first_name
+        self.last_name = last_name
         self.email = email
-        self.password = password
+        self.password = generate_password_hash(password)
         self.mobile_number = mobile_number
         self.orders = orders
-
+        self.address = address
         self.session_token = ""
         self.sms_code = ""
 
     def json(self):
         return {
             'id': self.id,
+            'first_name': self.first_name,
+            'last_name': self.last_name,
             'email': self.email,
             'password': self.password,
             'mobile_number': self.mobile_number,
             'orders': self.orders,
             'session_token': self.session_token,
-            'sms_code': self.sms_code
+            'sms_code': self.sms_code,
+            'address': self.address
         }
 
     def __repr__(self):
         return f'<User: {self.username}>'
 
+    def verify_password(self, pwd):
+        print(pwd, self.password)
+        print(type(pwd))
+        val = check_password_hash(self.password, pwd)
+        print(val)
+        return val
 
 class Product(db.Model):
     __tablename__ = 'product'
