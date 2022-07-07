@@ -19,16 +19,17 @@ class User(db.Model):
     sms_code = db.Column(db.Text)
     first_name = db.Column(db.Text)
     last_name = db.Column(db.Text)
+    address = db.Column(db.Text)
     orders = db.relationship("Order", backref='user', lazy='dynamic')
 
-    def __init__(self, first_name: str, last_name: str, email: str, password: str, mobile_number: str, orders: list = []):
+    def __init__(self, first_name: str, last_name: str, email: str, password: str, mobile_number: str, address: str, orders: list = []):
         self.first_name = first_name
         self.last_name = last_name
         self.email = email
         self.password = generate_password_hash(password)
         self.mobile_number = mobile_number
         self.orders = orders
-
+        self.address = address
         self.session_token = ""
         self.sms_code = ""
 
@@ -42,7 +43,8 @@ class User(db.Model):
             'mobile_number': self.mobile_number,
             'orders': self.orders,
             'session_token': self.session_token,
-            'sms_code': self.sms_code
+            'sms_code': self.sms_code,
+            'address': self.address
         }
 
     def __repr__(self):

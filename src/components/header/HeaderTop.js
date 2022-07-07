@@ -20,7 +20,7 @@ function HeaderTop() {
                 <img className="header-menu-location" src={require('../../assets/amazon-icons-location.png')} alt="amazon-location"/>
                 <div className="header-menu-address">
                     <span className="header-menu-address-top">{user? `Deliver ${user.firstName} ${user.lastName}` : 'Hello '}</span>
-                    <span className="header-menu-address-bottom">Select your address</span>
+                    <span className="header-menu-address-bottom">{user? `${user.address}` : 'Select your address'}</span>
                 </div>
             </div>
             <div className="header-menu-center">

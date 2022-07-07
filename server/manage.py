@@ -11,7 +11,7 @@ cli = FlaskGroup(app)
 @cli.command("create_test_user")
 def create_test_user():
     from models import User
-    db.session.add(User(first_name = "first", last_name = "last", email='123@m.com', password='123', mobile_number=MY_PHONE_NUMBER))
+    db.session.add(User(first_name = "first", last_name = "last", email='123@m.com', password='123', mobile_number=MY_PHONE_NUMBER, address= "City YTR937"))
     db.session.commit()
 
 

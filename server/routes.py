@@ -51,8 +51,9 @@ def twoFA():
         session['user_id'] = user_id
         first_name = user.first_name
         last_name = user.last_name
+        address = user.address
 
-        return jsonify({'Success': 'Successfully signed in as {user}.'.format(user=email), 'user_id': user_id, 'email': email, 'firstName': first_name, 'lastName': last_name }), 200
+        return jsonify({'Success': 'Successfully signed in as {user}.'.format(user=email), 'user_id': user_id, 'email': email, 'firstName': first_name, 'lastName': last_name, 'address': address }), 200
     else:
         return jsonify({'Error': 'SMS code is incorrect.'}), 401
 

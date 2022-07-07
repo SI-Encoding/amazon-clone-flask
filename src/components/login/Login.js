@@ -43,7 +43,8 @@ function Login() {
                     userId: res.data.user_id,
                     firstName: res.data.firstName,    
                     lastName: res.data.lastName,  
-                    email: res.data.email
+                    email: res.data.email,
+                    address: res.data.address
                 }
             })
             setVerifyError(false)
