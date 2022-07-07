@@ -1,4 +1,5 @@
 from app import db
+from werkzeug.security import generate_password_hash, check_password_hash
 
 order_product_association_table = db.Table(
 	"order_product_association",
@@ -24,7 +25,7 @@ class User(db.Model):
         self.first_name = first_name
         self.last_name = last_name
         self.email = email
-        self.password = password
+        self.password = generate_password_hash(password)
         self.mobile_number = mobile_number
         self.orders = orders
 
@@ -47,6 +48,12 @@ class User(db.Model):
     def __repr__(self):
         return f'<User: {self.username}>'
 
+    def verify_password(self, pwd):
+        print(pwd, self.password)
+        print(type(pwd))
+        val = check_password_hash(self.password, pwd)
+        print(val)
+        return val
 
 class Product(db.Model):
     __tablename__ = 'product'

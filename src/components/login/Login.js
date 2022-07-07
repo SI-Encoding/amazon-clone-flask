@@ -39,7 +39,12 @@ function Login() {
         if (res.status = 200) {
             dispatch({
                 type: set_user,
-                user: res.data.email
+                user: {
+                    userId: res.data.user_id,
+                    firstName: res.data.firstName,    
+                    lastName: res.data.lastName,  
+                    email: res.data.email
+                }
             })
             setVerifyError(false)
             navigate(-1)

@@ -131,6 +131,7 @@ function Checkout() {
             const res = await axios({method:'post', url:'http://localhost:5000/order', data: {products: products, user_id: 1},  headers: {"Content-Type": "application/json"}})
             .then((res)=> {
               emptyCart()
+              
               navigate("/")
             }).catch(err => console.log(err)) 
           } else {
@@ -149,7 +150,7 @@ function Checkout() {
         <div className="checkout-body">
         <div className="checkout-body-container">
             <div className="checkout-part">  
-                <span className="checkout-list">1</span> <span className="checkout-list-steps">Shipping address</span> <span className="checkout-username">username lastname</span>
+                <span className="checkout-list">1</span> <span className="checkout-list-steps">Shipping address</span> <span className="checkout-username">{user}</span>
             </div> 
             <div className="checkout-part" style={{paddingBottom: "75px"}}>
                 <span className="checkout-list">2</span> <span className="checkout-list-steps">Payment method</span> <span className="checkout-mastercard" style={{marginLeft: "30px"}}>MasterCard</span>

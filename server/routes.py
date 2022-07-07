@@ -5,7 +5,7 @@ from controller import Controller
 from flask import jsonify, session, request, g
 import random
 from smscontroller import twilio_client
-from settings import STRIPE_SECRET_KEY
+from settings import STRIPE_SECRET_KEY, PHONE_NUMBER
 import stripe
 
 ProductController = Controller(Product, db)
@@ -35,7 +35,7 @@ def index():
 @app.route('/2fa', methods=['POST'])
 def twoFA():
     email = request.form['email']
-
+    
     user = User.query.filter(User.email == email).first()
 
     if user.session_token != request.form['session_token']:
@@ -47,8 +47,12 @@ def twoFA():
         raise Exception("Broken")
 
     if request.form['sms_code'] == sms_code:
-        session['user_id'] = user.id
-        return jsonify({'Success': 'Successfully signed in as {user}.'.format(user=email), 'email': email}), 200
+        user_id = user.id
+        session['user_id'] = user_id
+        first_name = user.first_name
+        last_name = user.last_name
+
+        return jsonify({'Success': 'Successfully signed in as {user}.'.format(user=email), 'user_id': user_id, 'email': email, 'firstName': first_name, 'lastName': last_name }), 200
     else:
         return jsonify({'Error': 'SMS code is incorrect.'}), 401
 
@@ -63,7 +67,7 @@ def send_sms_code(mobile_number):
     message = twilio_client.messages \
         .create(
             body="This is your access code: {access_code}".format(access_code=sms_code),
-            from_='+15076930648',
+            from_=PHONE_NUMBER,
             to=mobile_number
     )
 
@@ -84,12 +88,12 @@ def login():
 
     email = request.form['email']
     password = request.form['password']
-   
+    
     user = User.query.filter(User.email==email).first()
     if not user:
         return jsonify({'Error': 'User {user} not found.'.format(user=email)}), 401
 
-    if user.password == password:
+    if user.verify_password(password):
         mobile_number = user.mobile_number
         access_code = send_sms_code(mobile_number)
 
