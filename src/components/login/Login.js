@@ -65,7 +65,7 @@ function Login() {
             <div className='login-body'>
                 {verify?
                     <div>
-                    <h1>Enter Access Code Sent to {mobile_number}</h1>
+                    <h1 className="login-header">Enter Access Code Sent to {mobile_number}</h1>
                     <div className='login-form'>
                         <h5>Access Code</h5>
                         {verifyError && <span className="login-error">Sorry! The access code is incorrect</span>}
@@ -74,7 +74,7 @@ function Login() {
                     </div></div>
                     :
                     <div>
-                    <h1>Sign-In</h1>
+                    <h1 className="login-header">Sign-In</h1>
                     {loginError && <span className="login-error">Sorry! Please enter a correct username and password</span>}
                     <div className='login-form'>
                         <h5> E-mail address</h5>

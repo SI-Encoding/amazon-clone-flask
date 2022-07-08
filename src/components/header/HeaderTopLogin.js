@@ -26,8 +26,10 @@ function HeaderTopLogin() {
                     <a href className="header-menu-signin-nav-signin">{user? 'sign out' : 'Sign in'}</a>
                 </Link>
                 <div className="header-menu-signin-nav-tooltip-footer">    
-                    New&nbsp;customer?    
-                    <a className="header-menu-signin-nav-tooltip-footer-link">Start&nbsp;here.</a>        
+                    New&nbsp;customer? 
+                <Link to={'/signup'}>
+                    <a className="header-menu-signin-nav-tooltip-footer-link">Start&nbsp;here.</a>  
+                </Link>
                 </div>
             </div>
             </div>
