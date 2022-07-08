@@ -158,3 +158,21 @@ def create_charge():
             'charge': 0
         }
         return jsonify(response_object), 400, {'Access-Control-Allow-Origin': '*'}
+
+@app.route('/register', methods=['POST'])
+def register():
+    email = request.form.get('email')
+    first_name = request.form.get('first_name')
+    last_name = request.form.get('last_name')
+    password = request.form.get('password')
+    mobile_number = request.form.get('mobile_number')
+    address = request.form.get('address')
+
+    if email and first_name and last_name and password:
+        result = UserController.add_one(first_name, last_name, email, password, mobile_number, address)
+        if type(result) == User:
+            return jsonify({'Success': 'Successfully signed in as {user}.'.format(user=email), 'email': email, 'first_name': first_name, 'last_name': last_name, 'address': address }), 200, {'Access-Control-Allow-Origin': '*'}
+        else:
+            return jsonify({'Error': 'Uncaught exception.'}), 500
+    else:
+        return jsonify({'Error': 'You must provide all of the following: email, first_name, last_name, password, mobile_number, address.'}), 401
