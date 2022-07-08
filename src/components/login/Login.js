@@ -84,7 +84,7 @@ function Login() {
                         <button type='submit'  className='login-sign-in' disabled={!email || !password} onClick={(e)=> signIn(e)}>Sign In</button>
                     </div>
                     <p>By signing in, you agree to Amazon's Conditions of Use and Privacy Notice.</p>
-                    <button  className='login-create-account'>Create Your Amazon Account</button>
+                    <button  className='login-create-account' onClick={(e)=> {navigate('/signup')}}>Create Your Amazon Account</button>
                     </div>
                 }
             </div>
