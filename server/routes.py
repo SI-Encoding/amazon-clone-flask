@@ -120,7 +120,18 @@ def get_order():
 def get_orders():
     response_object = {'status': 'success'}
     user_id = request.args.get('user_id')
-    response_object['data'] = OrderController.get_many(user_id=user_id).first().json()
+    print(user_id)
+    orders = OrderController.get_many(user_id=user_id)
+    if orders.count() > 0:
+        orders_json = []
+        for order in orders:
+            order_json = order.json()
+            print(order_json)
+            order_json['products'] = [product.json() for product in order_json['products']]
+            orders_json.append(order_json)
+        response_object['data'] = orders_json
+    else:
+        response_object['data'] = []
     return jsonify(response_object), 200, {'Access-Control-Allow-Origin': '*'}
 
 @app.route('/order', methods=['POST'])

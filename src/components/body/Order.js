@@ -8,12 +8,12 @@ export default function Order() {
 
     useEffect(()=> {
         async function getOrders(){
-            const res = await axios({method:'get', url:'http://localhost:5000/orders', data: {user_id: user.id},  headers: {"Content-Type": "multipart/form-data"}})
+            const res = await axios({method:'get', url:`http://localhost:5000/orders?user_id=${user.userId}`})
             console.log(res)
         }
         getOrders()
     },[])
-    
+
   return (
     <div>
        <h1 className="Order-header"> Your Orders </h1>
