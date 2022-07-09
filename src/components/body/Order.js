@@ -25,11 +25,11 @@ export default function Order() {
                 <div className="Order-container">
                     <div className="Order-container-item-1">
                         <span className="Order-container-item">ORDER PLACED</span> 
-                        <span className="Order-container-item">July 3, 2022</span> 
+                        <span className="Order-container-item">{order.created_date}</span> 
                     </div>
                     <div className="Order-container-item-2">
                         <span className="Order-container-item">TOTAL</span> 
-                        <span className="Order-container-item">CDN$ {order.products[0].price}</span>
+                        <span className="Order-container-item">CDN$ {order.total}</span>
                     </div>
                     <div className="Order-container-item-3">
                         <span className="Order-container-item">SHIP TO</span> 

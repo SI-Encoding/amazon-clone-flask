@@ -120,13 +120,11 @@ def get_order():
 def get_orders():
     response_object = {'status': 'success'}
     user_id = request.args.get('user_id')
-    print(user_id)
-    orders = OrderController.get_many(user_id=user_id)
+    orders = OrderController.get_many(user_id=user_id, order_by=Order.created_date.desc)
     if orders.count() > 0:
         orders_json = []
         for order in orders:
             order_json = order.json()
-            print(order_json)
             order_json['products'] = [product.json() for product in order_json['products']]
             orders_json.append(order_json)
         response_object['data'] = orders_json
