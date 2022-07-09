@@ -9,6 +9,7 @@ import HeaderCart from './components/header/HeaderCart'
 import Checkout from './components/body/Checkout'
 import SignUp from './components/signup/SignUp';
 import {Routes, Route } from 'react-router-dom'
+import Order from './components/body/Order';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           <Route path="product/:name/:id" element={<><HeaderTop/><HeaderBottom/><Product/></>}/>
           <Route path='/cart' element={<><HeaderTop/><HeaderBottom/><HeaderCart/><Cart/></>}/>
           <Route path ='/checkout' element={<Checkout/>}/>
+          <Route path ='/orders' element={<><HeaderTop/><HeaderBottom/><Order/></>}/>
       </Routes>  
     </div>
   );

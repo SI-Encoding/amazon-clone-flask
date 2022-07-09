@@ -1,5 +1,6 @@
 from app import db
 from werkzeug.security import generate_password_hash, check_password_hash
+import datetime
 
 order_product_association_table = db.Table(
 	"order_product_association",
@@ -104,16 +105,21 @@ class Order(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     products = db.relationship("Product", secondary=order_product_association_table)
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
+    created_date = db.Column(db.DateTime, default=datetime.datetime.utcnow)
+    total = db.Column(db.Integer)
 
     def __init__(self, products: list, user_id):
         self.products = products
         self.user_id = user_id
+        self.total = sum(p.price for p in products)
 
     def json(self):
         return {
             'id': self.id,
             'products': self.products,
-            'user_id': self.user_id
+            'user_id': self.user_id,
+            'total': self.total,
+            'created_date': self.created_date
         }
 
 
