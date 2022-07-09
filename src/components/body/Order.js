@@ -2,10 +2,13 @@ import React,{useState,useEffect} from 'react'
 import './Order.css'
 import {useSelector, useDispatch} from 'react-redux'
 import axios from 'axios'
+import {useNavigate} from 'react-router-dom'
+import {set_selected_product} from '../../rootReducer'
 
 export default function Order() {
     const user = useSelector(state => state.user)
     const [orders, setOrders] = useState([])
+    const navigate = useNavigate()
 
     useEffect(()=> {
         async function getOrders(){
@@ -15,6 +18,13 @@ export default function Order() {
         }
         getOrders()
     },[])
+
+    async function selectProduct(product) {
+        dispatch({
+            type: set_selected_product,
+            selectedProduct: product.id,
+        })
+    }
 
   return (
     <div>
@@ -47,7 +57,7 @@ export default function Order() {
                         <div className="Order-product-info">
                             <span className="Order-product-name">{product.name}</span>
                             <span>Return eligible through</span>
-                            <button className="Order-buy-again">Buy it again</button>
+                            <button className="Order-buy-again" onClick={()=> {selectProduct(product); navigate(`/product/:${product.name}/:${product.id}`)};}>Buy it again</button>
                         </div>
                     </div>
                 ))}
