@@ -116,6 +116,13 @@ def get_order():
     response_object['data'] = OrderController.get_one(id=order_id).json()
     return jsonify(response_object), 200, {'Access-Control-Allow-Origin': '*'}
 
+@app.route('/orders', methods=['GET'])
+def get_orders():
+    response_object = {'status': 'success'}
+    user_id = request.args.get('user_id')
+    response_object['data'] = OrderController.get_many(user_id=user_id).first().json()
+    return jsonify(response_object), 200, {'Access-Control-Allow-Origin': '*'}
+
 @app.route('/order', methods=['POST'])
 def post_order():
     response_object = {'status': 'success'}
