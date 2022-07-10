@@ -9,6 +9,7 @@ export default function Order() {
     const user = useSelector(state => state.user)
     const [orders, setOrders] = useState([])
     const navigate = useNavigate()
+    const dispatch = useDispatch()
 
     useEffect(()=> {
         async function getOrders(){
@@ -53,11 +54,11 @@ export default function Order() {
                 </div>
                 {order.products.map((product)=> (
                     <div className="Order-product-details">
-                        <img className="Order-product" src={require("../../assets/amazon-product-vacuum.jpg")}/>
+                        <img className="Order-product" src={require("../../assets/amazon-product-vacuum.jpg")} alt={product.name}/>
                         <div className="Order-product-info">
                             <span className="Order-product-name">{product.name}</span>
                             <span>Return eligible through</span>
-                            <button className="Order-buy-again" onClick={()=> {selectProduct(product); navigate(`/product/:${product.name}/:${product.id}`)};}>Buy it again</button>
+                            <button className="Order-buy-again" onClick={()=> {selectProduct(product); navigate(`/product/:${product.name}/:${product.id}`);}}>Buy it again</button>
                         </div>
                     </div>
                 ))}
