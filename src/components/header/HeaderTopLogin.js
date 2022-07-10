@@ -3,12 +3,14 @@ import './HeaderTopLogin.css'
 import {Link} from 'react-router-dom'
 import {useSelector, useDispatch} from 'react-redux'
 import {set_user} from '../../rootReducer'
+import axios from 'axios'
 
 function HeaderTopLogin() {
     const user = useSelector(state => state.user)
     const dispatch = useDispatch()
 
     const logout = async () => {
+        const res = await axios({method:'post', url:'http://localhost:5000/logout', data: {user_id:user.userId}, headers: {"Content-Type": "multipart/form-data"}});
         if(user){
             dispatch({
                 type: set_user,    

@@ -2,7 +2,7 @@ import './Login.css'
 import React, {useState} from 'react'
 import axios from 'axios'
 import {set_user} from '../../rootReducer'
-import {useDispatch} from 'react-redux'
+import {useDispatch, useSelector} from 'react-redux'
 import {Link, useNavigate} from 'react-router-dom'
 
 function Login() {
@@ -15,6 +15,7 @@ function Login() {
     const [entered_code, setEnteredCode] = useState("")
     const dispatch = useDispatch()
     const navigate = useNavigate();
+    const user = useSelector(state => state.user)
 
     async function signIn(e) {
         e.preventDefault()
@@ -54,42 +55,72 @@ function Login() {
         }
     }
    
+    async function signOut(e) {
+        e.preventDefault()
+
+        const res = await axios({method:'post', url:'http://localhost:5000/logout', data: {user_id:user.userId}, headers: {"Content-Type": "multipart/form-data"}});
+
+        if(user) {
+            dispatch({
+                type: set_user,    
+                user: null
+            })
+        }
+    }
+
     return (
-        <div className='login-container'>
-            <Link to="/" style={{textDecoration: 'none'}}>
-                <div className='login-logo-container'>
-                    <img className='login-logo' src={require('../../assets/amazon-logo-login.png')} alt="amazon-logo"/>
-                    <span className="login-logo-country">.ca</span>
+        <>
+        { user? 
+            <>
+                <div className='login-container'> 
+                    <div className="login-logged-in">
+                        <h1 className="login-header">Sorry! It looks like you are already signed in</h1>
+                        <div className='login-form'>
+                            <button className='login-sign-in' onClick={(e)=> signOut(e)}>Sign Out</button>
+                        </div>
+                    </div>
+                </div> 
+            </>
+            :
+            <>
+                <div className='login-container'>
+                    <Link to="/" style={{textDecoration: 'none'}}>
+                        <div className='login-logo-container'>
+                            <img className='login-logo' src={require('../../assets/amazon-logo-login.png')} alt="amazon-logo"/>
+                            <span className="login-logo-country">.ca</span>
+                        </div>
+                    </Link>
+                <div className='login-body'>
+                    {verify?
+                        <div>
+                            <h1 className="login-header">Enter Access Code Sent to {mobile_number}</h1>
+                            <div className='login-form'>
+                            <h5>Access Code</h5>
+                            {verifyError && <span className="login-error">Sorry! The access code is incorrect</span>}
+                            <input value={entered_code} onChange= {(e) => setEnteredCode(e.target.value)}/>
+                            <button type='submit'  className='login-sign-in' disabled={!entered_code} onClick={(e)=> verifyAccessCode(e)}>Verify Access Code</button>
+                        </div>
+                        </div>
+                            :
+                        <div>
+                        <h1 className="login-header">Sign-In</h1>
+                        {loginError && <span className="login-error">Sorry! Please enter a correct username and password</span>}
+                        <div className='login-form'>
+                            <h5> E-mail address</h5>
+                            <input value={email} onChange= {(e) => setEmail(e.target.value)}/>
+                            <h5> Password </h5>
+                            <input type='password' value={password} onChange={(e) => setPassword(e.target.value)}/>
+                            <button type='submit' className='login-sign-in' disabled={!email || !password} onClick={(e)=> signIn(e)}>Sign In</button>
+                        </div>
+                        <p>By signing in, you agree to Amazon's Conditions of Use and Privacy Notice.</p>
+                        <button  className='login-create-account' onClick={(e)=> {navigate('/signup')}}>Create Your Amazon Account</button>
+                        </div>
+                    }
                 </div>
-            </Link>
-            <div className='login-body'>
-                {verify?
-                    <div>
-                    <h1 className="login-header">Enter Access Code Sent to {mobile_number}</h1>
-                    <div className='login-form'>
-                        <h5>Access Code</h5>
-                        {verifyError && <span className="login-error">Sorry! The access code is incorrect</span>}
-                        <input value={entered_code} onChange= {(e) => setEnteredCode(e.target.value)}/>
-                        <button type='submit'  className='login-sign-in' disabled={!entered_code} onClick={(e)=> verifyAccessCode(e)}>Verify Access Code</button>
-                    </div></div>
-                    :
-                    <div>
-                    <h1 className="login-header">Sign-In</h1>
-                    {loginError && <span className="login-error">Sorry! Please enter a correct username and password</span>}
-                    <div className='login-form'>
-                        <h5> E-mail address</h5>
-                        <input value={email} onChange= {(e) => setEmail(e.target.value)}/>
-                        <h5> Password </h5>
-                        <input type='password' value={password} onChange={(e) => setPassword(e.target.value)}/>
-                        <button type='submit'  className='login-sign-in' disabled={!email || !password} onClick={(e)=> signIn(e)}>Sign In</button>
-                    </div>
-                    <p>By signing in, you agree to Amazon's Conditions of Use and Privacy Notice.</p>
-                    <button  className='login-create-account' onClick={(e)=> {navigate('/signup')}}>Create Your Amazon Account</button>
-                    </div>
-                }
-            </div>
-        </div>       
-    )
-}
+            </div> 
+            </>}   
+            </>
+        )
+    }
 
 export default Login

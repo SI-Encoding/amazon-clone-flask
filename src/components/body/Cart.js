@@ -10,6 +10,7 @@ function Cart() {
     let total_items = useSelector(state => state.total_items)
     let product_counter = useSelector(state => state.product_counter)
     let total_cost = useSelector(state => state.total_cost)
+    const user = useSelector(state => state.user)
     const navigate = useNavigate();
 
     async function addToCart(product) {
@@ -100,6 +101,14 @@ function Cart() {
     useEffect(()=>{
       calculateTotal()
     },[product_counter,total_cost,products])
+
+    function checkout() {
+      if (user) {
+        navigate('/checkout')
+      } else {
+        navigate('/login')
+      }
+    }
 
   return (
     <div className="cart-container">       
@@ -230,7 +239,7 @@ function Cart() {
                 </span>
             </span>
             <span style={{marginLeft: "0", marginRight: "auto", paddingLeft: "5px"}}></span>        
-            <button onClick={()=> navigate('/checkout')}><Link to="/checkout" style={{textDecoration:'none'}}>Proceed to checkout</Link></button>  
+            <button onClick={()=> checkout()}>Proceed to checkout</button>  
           </div>
         </div>
       </div>
