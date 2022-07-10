@@ -48,6 +48,7 @@ def twoFA():
 
     if request.form['sms_code'] == sms_code:
         user_id = user.id
+        print(user_id)
         session['user_id'] = user_id
         first_name = user.first_name
         last_name = user.last_name
@@ -85,8 +86,7 @@ def before_request():
 
 @app.route('/login', methods=['POST'])
 def login():
-    session.pop('user_id', None)
-
+ 
     email = request.form['email']
     password = request.form['password']
     
@@ -102,6 +102,7 @@ def login():
         session['sms_code'] = access_code
 
         user.session_token = generate_session_token()
+        session['session_token'] = user.session_token
         user.sms_code = session['sms_code']
         db.session.commit()
 
@@ -146,7 +147,6 @@ def post_order():
 
 @app.route('/product', methods=['GET'])
 def product():
-    print("a")
     response_object = {'status': 'success'}
     product_id = request.args.get('product_id')
     response_object['data'] = ProductController.get_one(id=product_id).json()
@@ -192,3 +192,13 @@ def register():
             return jsonify({'Error': 'Uncaught exception.'}), 500
     else:
         return jsonify({'Error': 'You must provide all of the following: email, first_name, last_name, password, mobile_number, address.'}), 401
+
+@app.route('/logout', methods=['POST'])
+def logout():
+    id = request.form.get('user_id')
+    user_id = session.pop('user_id', None)
+    session.pop('session_token', None)
+    user = UserController.get_one(id=id)
+    user.session_token = None
+    db.session.commit()
+    return jsonify({'Success': 'Successfully signed out'})

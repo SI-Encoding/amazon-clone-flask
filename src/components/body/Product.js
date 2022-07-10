@@ -10,6 +10,7 @@ function Product() {
   let products = useSelector(state => state.products)
   let total_items = useSelector(state => state.total_items)
   let product_counter = useSelector(state => state.product_counter)
+  const user = useSelector(state => state.user)
   const dispatch = useDispatch()
   const navigate = useNavigate();
   const [displayProduct, setDisplayProduct] = useState({})
@@ -88,6 +89,15 @@ async function calculateTotal() {
   })
 }
 
+function checkout(e) {
+  if(user) { 
+    navigate('/checkout');  
+  } else {
+    CheckoutToCart(displayProduct, e); 
+    navigate('/login')
+  }
+}
+
   return (
     <div className="product-left-and-right" >
       <div className='product-main-container'>
@@ -121,7 +131,7 @@ async function calculateTotal() {
           <span>Quantity:</span>
           <select style={{border: "1px solid #DDD", borderRadius: "4px 4px 4px 4px", padding: "3px"}}>{[1,2,3,4,5].slice(0, displayProduct.inventory < 5 ? displayProduct.inventory : 5).map(opt => (<option value={opt}>{opt}</option>)) }</select>
           <button onClick={(e)=> addToCart(displayProduct, e)}>Add to Cart</button>
-          <button style={{background: "#FFA41C" , borderColor: "#FF8F00"}} onClick={(e)=> {CheckoutToCart(displayProduct, e); navigate('/checkout')}}>Buy now</button>
+          <button style={{background: "#FFA41C" , borderColor: "#FF8F00"}} onClick={(e)=> checkout(e)}>Buy now</button>
         </div>
       </div>
     </div>
