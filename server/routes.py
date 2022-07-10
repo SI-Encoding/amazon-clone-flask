@@ -140,9 +140,13 @@ def post_order():
     products_to_add = []
     for product_id in post_data['products']:
         product = ProductController.get_one(id=product_id)
+        product.inventory-= 1
+        product.amount_sold+= 1
+        db.session.commit()
         products_to_add.append(product)
     OrderController.add_one(products_to_add, post_data['user_id'])
     response_object['data'] = 'Order added!'
+
     return jsonify(response_object), 200, {'Access-Control-Allow-Origin': '*'}
 
 @app.route('/product', methods=['GET'])
