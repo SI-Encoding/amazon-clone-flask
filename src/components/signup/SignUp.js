@@ -50,7 +50,7 @@ function SignUp() {
                     <span className="login-logo-country">.ca</span>
                 </div>
             </Link>
-            <div className='login-body'>
+            <form className='login-body'>
                     <div>
                     <h1 className="signup-header">Create account</h1>
                     {signUpError && <span className="login-error">Sorry! Please correctly enter all the required fields.</span>}
@@ -75,7 +75,7 @@ function SignUp() {
                         <p>Already have an account?</p>
                         <button className='login-create-account' onClick={(e)=> {navigate('/login')}}>Sign in</button>
                     </div>
-            </div>
+            </form>
         </div>       
     )
 }

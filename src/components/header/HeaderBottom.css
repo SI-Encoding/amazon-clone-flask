@@ -1,8 +1,10 @@
+@import '../../constants.css';
+
 .header-menu-container-bottom {
     height: 35px;
     display: flex;
     align-items: center;
-    background-color: #232f3e;
+    background-color: var(--darknavyblue);
     position: sticky;
     top: 0;
     z-index: 88;
@@ -12,7 +14,7 @@
     display:flex;
 }
 .header-menu-left-typography {
-    color:#FFFF;
+    color: var(--white);
     font-size:14px;
     font-family: sans-serif;
     line-height: 12px;
@@ -33,7 +35,7 @@
     padding: 8px 9px;
     font-size: 14px;
     font-family: sans-serif;
-    color: #FFF;
+    color: var(--white);
     line-height: 12px;
 }
 @media only screen and (max-width: 1252px) {

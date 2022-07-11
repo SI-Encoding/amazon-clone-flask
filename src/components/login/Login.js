@@ -90,7 +90,7 @@ function Login() {
                             <span className="login-logo-country">.ca</span>
                         </div>
                     </Link>
-                <div className='login-body'>
+                <form className='login-body'>
                     {verify?
                         <div>
                             <h1 className="login-header">Enter Access Code Sent to {mobile_number}</h1>
@@ -116,7 +116,7 @@ function Login() {
                         <button  className='login-create-account' onClick={(e)=> {navigate('/signup')}}>Create Your Amazon Account</button>
                         </div>
                     }
-                </div>
+                </form>
             </div> 
             </>}   
             </>

@@ -1,0 +1,24 @@
+:root {
+  --lightgrey: #f3f3f3;
+  --blueblack: #131921;
+  --orange: #febd69;
+  --brightorange: #ff9900;
+  --grey: #cdcdcd;
+  --white: #fff;
+  --mediumgrey: #e7e7e7;
+  --black: #000;
+  --navyblue: #05a;
+  --darknavyblue: #232f3e;
+
+  --brown: #c89411;
+  --browner: #b0820f;
+  --brownest: #99710d;
+
+  --lightbrownorange: #fcf3dc;
+  --mediumbrownorange: #f3cf72;
+  --lightmediumbrownorange: #f8e3ad;
+  --brightbrownorange: #EEBA37;
+
+
+  --font: "Amazon Ember", Arial, sans-serif;
+}

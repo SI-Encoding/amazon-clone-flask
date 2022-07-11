@@ -6,9 +6,9 @@
     width: 159px;
     height: 86px;
     border-radius: 3px 3px 3px 3px;
-    overflow: visible!important;
-    background: #fff;
-    border: 1px solid #bbb;
+    overflow: visible !important;
+    background: var(--white);
+    border: 1px solid var(--grey);
     box-sizing: border-box;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
@@ -37,7 +37,7 @@
     border-width: 9px;
     border-color: transparent;
     border-top-width: 0;
-    border-bottom: 9px solid #fff;
+    border-bottom: 9px solid var(--white);
     width: 0;
     height: 0;
     font-size: 0;
@@ -53,7 +53,7 @@
  
  .header-menu-signin-nav-tooltip-footer{
     padding-top: 10px;
-    color: #333;
+    color: var(--blueblack);
     font-size: 11px;
     display: flex;
     justify-content: center;
@@ -62,7 +62,7 @@
  }
  
  .header-menu-signin-nav-tooltip-footer-link{
-    color: #05a;
+    color: var(--navyblue);
     text-decoration: none;
     padding-left: 3px;
     font-family: sans-serif;
@@ -79,23 +79,23 @@
     cursor: pointer;
     outline: 0;
     border: 1px solid;
-    border-color: #c89411 #b0820f #99710d;
+    border-color: var(--brown) var(--browner) var(--brownest);
     -webkit-border-radius: 3px 3px 3px 3px;
     -moz-border-radius: 3px 3px 3px 3px;
     border-radius: 3px 3px 3px 3px;
     border-radius: 0\9;
-    -webkit-box-shadow: inset 0 1px 0 0 #fcf3dc;
-    -moz-box-shadow: inset 0 1px 0 0 #fcf3dc;
-    box-shadow: inset 0 1px 0 0 #fcf3dc;
-    background: #f3cf72;
-    background: linear-gradient(to bottom,#f8e3ad,#EEBA37);
-    background: -moz-linear-gradient(top,#f8e3ad,#EEBA37);
-    background: -webkit-linear-gradient(top,#f8e3ad,#EEBA37);
-    background: -o-linear-gradient(top,#f8e3ad,#EEBA37);
-    background: -ms-linear-gradient(top,#f8e3ad,#EEBA37);
+    -webkit-box-shadow: inset 0 1px 0 0 ;
+    -moz-box-shadow: inset 0 1px 0 0 var(--lightbrownorange);
+    box-shadow: inset 0 1px 0 0 var(--lightbrownorange);
+    background: var(--mediumbrownorange);
+    background: linear-gradient(to bottom,var(--lightmediumbrownorange),var(--brightbrownorange));
+    background: -moz-linear-gradient(top,var(--lightmediumbrownorange),var(--brightbrownorange));
+    background: -webkit-linear-gradient(top,var(--lightmediumbrownorange),var(--brightbrownorange));
+    background: -o-linear-gradient(top,var(--lightmediumbrownorange),var(--brightbrownorange));
+    background: -ms-linear-gradient(top,var(--lightmediumbrownorange),var(--brightbrownorange));
     text-align: center;
     line-height: 31px;
-    color: #111;
+    color: var(--black);
     font-family: inherit;
     text-decoration: none;
     line-height: 30px;
