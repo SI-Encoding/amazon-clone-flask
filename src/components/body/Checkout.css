@@ -86,6 +86,7 @@
 .checkout-input {
     padding: 0px 10px;
     height: 33px;
+    pointer-events: none;
 }
 
 .checkout-right-container {

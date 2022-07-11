@@ -11,9 +11,9 @@ function Checkout() {
     let product_counter = useSelector(state => state.product_counter)
     let total_cost = useSelector(state => state.total_cost)
     let user = useSelector(state => state.user)
-    const [cardNumber, setCardNumber] = useState('')
-    const [expireDate, setExpireDate] = useState('')
-    const [cvc, setCvc] = useState('')
+    const [cardNumber, setCardNumber] = useState('4242424242424242')
+    const [expireDate, setExpireDate] = useState('1111')
+    const [cvc, setCvc] = useState('111')
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
@@ -164,7 +164,7 @@ function Checkout() {
                 <form autocomplete="off">
                     <div className="checkout-card-number-input">
                         <input class="checkout-input" type="text" placeholder="Card Number" id="card-number" style={{marginTop: "13px"}} 
-                          value={cardNumber} onChange={(e)=> setCardNumber(e.target.value)}/>
+                          value={cardNumber}/>
                         <div style={{display:"flex"}}>
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="64px" height="64px">
                           <path fill="#1565C0" d="M45,35c0,2.209-1.791,4-4,4H7c-2.209,0-4-1.791-4-4V13c0-2.209,1.791-4,4-4h34c2.209,0,4,1.791,4,4V35z"/>
@@ -189,9 +189,9 @@ function Checkout() {
                     </div>
                     <div className="checkout-card-number-input">
                         <input class="checkout-input" type="text" placeholder="MM/YY" id="card-expire-date" style={{marginRight: "10px"}}
-                          value={expireDate} onChange={(e)=> setExpireDate(e.target.value)}/>
+                          value={expireDate}/>
                         <input class="checkout-input" type="text" placeholder="CVC" id="card-cvc"
-                          value={cvc} onChange={(e)=> setCvc(e.target.value)}/>
+                          value={cvc}/>
                     </div>
                 </form>
             </div> 
