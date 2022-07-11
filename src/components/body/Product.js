@@ -6,7 +6,6 @@ import {set_total_items, set_products, set_product_counter, set_total_cost} from
 import {useNavigate} from 'react-router-dom'
 
 function Product() {
-  const productId = useSelector(state => state.selectedProduct)
   let products = useSelector(state => state.products)
   let total_items = useSelector(state => state.total_items)
   let product_counter = useSelector(state => state.product_counter)
@@ -15,8 +14,9 @@ function Product() {
   const navigate = useNavigate();
   const [displayProduct, setDisplayProduct] = useState({})
 
-  useEffect(()=>{ 
+  useEffect(()=>{
     async function fetchProduct() {
+      var productId = window.location.href.split(':').slice(-1)[0];
       const res = await axios.get(`http://localhost:5000/product?product_id=${productId}`)
         console.log("DATA...");
         console.log(res.data);
