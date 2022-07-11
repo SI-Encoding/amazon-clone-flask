@@ -1,10 +1,21 @@
 import React from 'react'
 import './Home.css'
-
+import {useSelector, useDispatch} from 'react-redux'
+import {set_popup, } from '../../rootReducer'
 import FeaturedProducts from './FeaturedProducts'
 
 
 function Home() {
+    const popup = useSelector(state => state.popup)
+    const dispatch = useDispatch()
+
+    const setPopup = () => {
+        dispatch({
+            type: set_popup,
+            popup: false
+        })
+    }
+
     return (
         <>
             <div className="home-container">
@@ -73,6 +84,14 @@ function Home() {
                     <hr style={{height: "20px", border: "none", margin: "0"}}/>
                 </div>
             </div>
+            {popup && 
+                <div className="demo-container">
+                    <span className="demo-span">Note: we are not an ecommerce store that sells products. <br/> This web application is just for demonstration purposes. <br/> We are not
+                        affiliated with Amazon in anyway.
+                    </span>
+                    <button className="demo-button" onClick={()=> setPopup()}>ok</button>
+                </div>
+            }
         </>
     )
 }

@@ -131,3 +131,39 @@
     padding-top: 20px;
     padding-bottom: 15px;
 }
+
+.demo-container {
+    display:flex;
+    position: fixed;
+    margin-top:30px;
+    flex-direction: column;
+    background-color: white;
+    border-radius: 15px;
+    border: 1px solid gray;
+    box-shadow: 0px 5px 7px -7px rgba(0,0,0,0.75);
+    width: 40%;
+    z-index: 1;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    height: 200px;
+}
+
+.demo-span {
+    text-align: center;
+    padding: 16px;
+}
+
+.demo-button {
+    border-radius: 8px;
+    width: 120px;
+    height: 30px;
+    border: 1px solid;
+    margin-top: 10px;
+    background: #FFD814;
+    border-color: #FCD200;
+    color: #111;
+    cursor: pointer;
+    margin-left: auto;
+    margin-right: auto;
+}
