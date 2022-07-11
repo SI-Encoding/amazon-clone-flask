@@ -2,7 +2,7 @@
 This is an web application done using React and Flask.
 
 ## To deploy the entire thing (via four integrated Docker containers):
-1. `docker-compose-up`
+1. `docker-compose up`
 
 
 ### How to install the needed dependencies
