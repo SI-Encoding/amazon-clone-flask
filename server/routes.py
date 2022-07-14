@@ -94,6 +94,9 @@ def login():
     if not user:
         return jsonify({'Error': 'User {user} not found.'.format(user=email)}), 401
 
+    if user.active == False:
+        return jsonify({'Error': 'User {user} account is deactivated.'}), 401, {'Access-Control-Allow-Origin': '*'}
+
     if user.verify_password(password):
         mobile_number = user.mobile_number
         access_code = send_sms_code(mobile_number)
@@ -205,4 +208,15 @@ def logout():
     user = UserController.get_one(id=id)
     user.session_token = None
     db.session.commit()
-    return jsonify({'Success': 'Successfully signed out'})
+    return jsonify({'Success': 'Successfully signed out'}), {'Access-Control-Allow-Origin': '*'}
+
+@app.route('/deactivateUser', methods=['PUT'])
+def deactivate():
+    id = request.form.get('user_id')
+    user_id = session.pop('user_id', None)
+    session.pop('session_token', None)
+    user = UserController.get_one(id=id)
+    user.session_token = None
+    user.active = False
+    db.session.commit()
+    return jsonify({'Success': 'Successfully deactivated'}), {'Access-Control-Allow-Origin': '*'}

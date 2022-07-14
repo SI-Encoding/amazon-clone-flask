@@ -19,6 +19,16 @@ function HeaderTopLogin() {
         }
     }
 
+    const deactivateAccount = async () => {
+        const res = await axios({method:'put', url:'http://localhost:5000/deactivateUser', data: {user_id:user.userId}, headers: {"Content-Type": "multipart/form-data"}});
+        console.log(res)
+        if(user){
+            dispatch({
+                type: set_user,    
+                user: null
+            })
+        }
+    }
     return (
         <div className="header-menu-signin">
             <div className="header-menu-signin-nav-arrow">
@@ -27,12 +37,13 @@ function HeaderTopLogin() {
                 <Link to={user? '/' : '/login'} onClick={()=> logout()}>
                     <a href className="header-menu-signin-nav-signin">{user? 'sign out' : 'Sign in'}</a>
                 </Link>
-                <div className="header-menu-signin-nav-tooltip-footer">    
-                    New&nbsp;customer? 
-                <Link to={'/signup'}>
+                
+                {user ? <div className="header-menu-signin-nav-tooltip-footer">    
+                    <p className="header-menu-signin-nav-tooltip-footer-link" onClick={()=> deactivateAccount()}>Deactivate&nbsp;your&nbsp;account?</p> </div>
+                    :<div className="header-menu-signin-nav-tooltip-footer">    
+                    New&nbsp;customer? <Link to={'/signup'}>
                     <a className="header-menu-signin-nav-tooltip-footer-link">Start&nbsp;here.</a>  
-                </Link>
-                </div>
+                </Link> </div>}
             </div>
             </div>
         </div>

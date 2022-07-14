@@ -27,7 +27,9 @@ function Login() {
                 localStorage.setItem('session_token', res.data.session_token)
                 setVerify(true)
                 setLoginError(false)
-            } 
+            } else {
+                alert("Sorry, your account has been deactivated!")
+            }
         } catch(error){
             setLoginError(true)
         }
@@ -104,7 +106,7 @@ function Login() {
                             :
                         <div>
                         <h1 className="login-header">Sign-In</h1>
-                        {loginError && <span className="login-error">Sorry! Please enter a correct username and password</span>}
+                        {loginError && <span className="login-error">Sorry! Either this account does not exist or you entered the wrong username and password</span>}
                         <div className='login-form'>
                             <h5> E-mail address</h5>
                             <input value={email} onChange= {(e) => setEmail(e.target.value)}/>

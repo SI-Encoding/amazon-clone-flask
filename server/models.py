@@ -22,6 +22,7 @@ class User(db.Model):
     last_name = db.Column(db.Text)
     address = db.Column(db.Text)
     orders = db.relationship("Order", backref='user', lazy='dynamic')
+    active = db.Column(db.Boolean)
 
     def __init__(self, first_name: str, last_name: str, email: str, password: str, mobile_number: str, address: str, orders: list = []):
         self.first_name = first_name
@@ -33,6 +34,7 @@ class User(db.Model):
         self.address = address
         self.session_token = ""
         self.sms_code = ""
+        self.active = True
 
     def json(self):
         return {
@@ -45,7 +47,8 @@ class User(db.Model):
             'orders': self.orders,
             'session_token': self.session_token,
             'sms_code': self.sms_code,
-            'address': self.address
+            'address': self.address,
+            'active': self.active
         }
 
     def __repr__(self):
