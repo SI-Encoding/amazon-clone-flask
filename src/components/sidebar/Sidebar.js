@@ -2,15 +2,14 @@ import React from 'react'
 import './Sidebar.css'
 import Avatar from '../../assets/amazon-profile-icon.png'
 import GrayArrow from '../../assets/amazon-gray-arrow-icon.png'
-import DarkArrow from '../../assets/amazon-dark-arrow-icon.png'
 import GrayDownArrow from '../../assets/amazon-gray-down-arrow-icon.png'
 import Globe from '../../assets/amazon-globe-icon.png'
 import Flag from '../../assets/amazon-mini-canada-flag.png'
-import Cancel from '../../assets/amazon-cancel-icon.png'
-export default function Sidebar() {
+import Cancel from '../../assets/amazon-sidebar-cancel-icon.png'
+export default function Sidebar({setOpenMenu}) {
   return (
     <div className="sidebar-container">
-        <img src={Cancel} className='sidebar-cancel'/>
+        <img src={Cancel} className='sidebar-cancel' onClick={()=> {setOpenMenu(false); }}/>
         <div className="sidebar-header">
             <div className='sidebar-avatar'>
                 <img src={Avatar}/>

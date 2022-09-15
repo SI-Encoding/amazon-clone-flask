@@ -4,6 +4,7 @@ import Sidebar from '../sidebar/Sidebar.js'
 function HeaderBottom() {
     const [openMenu, setOpenMenu] = useState(false)
 
+    
     return (
         <div className="header-menu-container-bottom">
             <div className="header-menu-left" onClick={()=>setOpenMenu(true)}>
@@ -28,7 +29,7 @@ function HeaderBottom() {
             <div className="header-menu-right">
                 <img src={require("../../assets/amazon-prime.jpg")} style={{height:"32px"}}/>
             </div>
-            {openMenu && <Sidebar/>}
+            {openMenu && <Sidebar setOpenMenu={setOpenMenu}/>}
         </div>
     )
 }
