@@ -3,7 +3,6 @@
     display: flex;
     align-items: center;
     background-color: #232f3e;
-    position: sticky;
     top: 0;
     z-index: 88;
 }
@@ -11,6 +10,11 @@
     padding: 8px 9px;
     display:flex;
 }
+
+.header-menu-left:hover {
+    cursor: pointer;
+}
+
 .header-menu-left-typography {
     color:#FFFF;
     font-size:14px;

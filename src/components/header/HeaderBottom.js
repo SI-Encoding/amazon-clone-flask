@@ -1,10 +1,13 @@
-import React from 'react'
+import React, {useState} from 'react'
 import './HeaderBottom.css'
-
+import Sidebar from '../sidebar/Sidebar.js'
 function HeaderBottom() {
+    const [openMenu, setOpenMenu] = useState(false)
+
+    
     return (
         <div className="header-menu-container-bottom">
-            <div className="header-menu-left">
+            <div className="header-menu-left" onClick={()=>setOpenMenu(true)}>
                 <img src={require("../../assets/amazon-icons-menu.png")} alt="amazon-menu"/>
                 <span className="header-menu-left-typography">All</span>
             </div>
@@ -26,6 +29,7 @@ function HeaderBottom() {
             <div className="header-menu-right">
                 <img src={require("../../assets/amazon-prime.jpg")} style={{height:"32px"}}/>
             </div>
+            {openMenu && <Sidebar setOpenMenu={setOpenMenu}/>}
         </div>
     )
 }
