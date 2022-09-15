@@ -16,6 +16,12 @@
     top: 0;
 }
 
+.sidebar-cancel {
+    position: absolute;
+    left: 371px;
+    top: 17px;
+}
+
 .sidebar-avatar {
     margin: 0 10px 0 36px;
 }
@@ -62,6 +68,28 @@
     padding-left: 36px;
     padding-top: 13px;
     font-size: 12px;
+}
+
+.menu-unorderedlist > a > div {
+    display: flex;
+}
+
+.menu-unorderedlist > a > div > img {
+    margin-left: auto;
+    width: 10px;
+    height: 14px;
+    transform: scaleX(1);
+}
+
+.menu-unorderedlist > a > img {
+    margin-left: 10px;
+    height: 8px;
+    width: 13px;
+}
+
+.menu-unorderedlist > a:hover {
+    background-color: #eaeded;
+    cursor: pointer;
 }
 
 .menu_divider {
