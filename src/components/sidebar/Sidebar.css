@@ -1,8 +1,8 @@
 .sidebar-container {
     background: white;
-    position: fixed;
+    position: absolute;
+    top: 0;
     width:365px;
-    margin-top: 91px;
     z-index: 89;
 }
 
@@ -13,6 +13,7 @@
     align-items: center;
     display: flex;
     position: absolute; 
+    top: 0;
 }
 
 .sidebar-avatar {
