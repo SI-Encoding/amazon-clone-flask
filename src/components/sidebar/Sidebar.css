@@ -23,6 +23,10 @@
     background: rgba(0, 0, 0, 0.5);
 }
 
+.sidebar-cancel:hover {
+    cursor: pointer;
+}
+
 .sidebar-avatar {
     margin: 0 10px 0 36px;
 }
@@ -48,7 +52,7 @@
     flex-direction: column;
 }
 
-.menu-unorderedlist > h4, a{
+.menu-unorderedlist > h4{
     padding-bottom: 5px;
     font-size: 18px;
     font-weight: 700;
