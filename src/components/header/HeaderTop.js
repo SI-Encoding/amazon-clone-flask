@@ -41,15 +41,15 @@ function HeaderTop() {
                 <img className="header-menu-flag" src={require("../../assets/amazon-flag-canada.png")} alt="amazon-flag"/>
                 <img className="header-menu-flag-dropdown" src={require("../../assets/amazon-icons-dropdown-arrow-grey.png")} alt="amazon-dropdown"/>
                 <div className="header-menu-address" onClick={()=> setLoginPopup(!loginPopup)}>
-                    <span className="header-menu-address-top" style={{marginLeft:"0px", color:"#fff"}}>Hello, {user? `${user.firstName} ${user.lastName}` : 'Sign in'}</span>
+                    <span className="header-menu-address-top header-menu-address-top-margin" >Hello, {user? `${user.firstName} ${user.lastName}` : 'Sign in'}</span>
                     <span className="header-menu-address-bottom">Account & Lists</span>
                     {loginPopup && <HeaderTopLogin/>}
                 </div>
                 <img className="header-menu-flag-dropdown" src={require("../../assets/amazon-icons-dropdown-arrow-grey.png")} alt="amazon-dropdown"/>
                 <div className="header-menu-address">
                     <Link to={user? '/orders' : '/login'}>
-                        <div style={{display: 'flex', flexDirection: 'column'}}>  
-                            <span className="header-menu-address-top" style={{marginLeft:"0px", color:"#fff"}}>Returns</span>
+                        <div className="header-menu-top-flex">  
+                            <span className="header-menu-address-top header-menu-address-top-margin">Returns</span>
                             <span className="header-menu-address-bottom">& Orders</span>
                         </div>
                     </Link>
@@ -60,7 +60,7 @@ function HeaderTop() {
                         <img className="header-menu-cart-img" src={require("../../assets/amazon-icons-cart.png")} alt="amazon-cart"/>
                     </div>
                 </Link>
-                <span className="header-menu-address-bottom" style={{marginTop: "15px"}}>Cart</span>
+                <span className="header-menu-address-bottom header-menu-address-bottom-margin">Cart</span>
             </div>
         </div>
     </>

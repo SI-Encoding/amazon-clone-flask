@@ -6,9 +6,11 @@
     top: 0;
     z-index: 88;
 }
+
 .header-menu-left {
     display:flex;
 }
+
 .header-menu-logo-container {
     display:flex;
     padding-right: 15px;
@@ -17,25 +19,30 @@
 .header-menu-logo-container:hover {
     cursor: pointer;
 }
+
 .header-menu-logo {
     object-fit: contain;
     margin-left: 11px;
 }
+
 .header-menu-logo-country {
     color:#fff;
    font-size: 11px;
     margin-top: 5px;
 }
+
 .header-menu-location {
     width: 15px;
     height: 18px;
     margin-top: 10px;
     padding-right: 2px;
 }
+
 .header-menu-address {
     display: flex;
     flex-direction: column;
 }
+
 .header-menu-address-top {
    color:#ccc;
    font-size: 12px;
@@ -45,6 +52,17 @@
     font-family: sans-serif;
     margin-left: 2px;
 }
+
+.header-menu-address-top-margin {
+    margin-left:0px; 
+    color:#fff;
+}
+
+.header-menu-top-flex {
+    display: flex;
+    flex-direction: column;
+}
+
 .header-menu-address-bottom {
     color: #fff;
     font-size: 13px;
@@ -53,6 +71,11 @@
     font-family: sans-serif;
     cursor: pointer;
 }
+
+.header-menu-address-bottom-margin {
+    margin-top:15px;
+}
+
 .header-menu-center{
     margin-left: 15px;
     display: flex;

@@ -102,3 +102,17 @@
     padding: 0;
     margin: 5px 0;
 }
+
+.menu-globe-icon {
+    width: 15px;
+    height: 15px;
+    margin-left: 0;
+    margin-right: 10px;
+}
+
+.menu-flag-icon {
+    width: 20px;
+    height: 15px;
+    margin-left: 0;
+    margin-right: 5px;
+}

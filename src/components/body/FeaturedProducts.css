@@ -27,3 +27,11 @@
     overflow: scroll;
     overflow-y: hidden;
 }
+
+.featured-heading > h1 {
+    font-size: 25px;
+}
+
+.featured-products > li {
+    list-style-type: none;
+}

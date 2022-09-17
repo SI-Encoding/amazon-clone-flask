@@ -86,7 +86,7 @@ function Login() {
             :
             <>
                 <div className='login-container'>
-                    <Link to="/" style={{textDecoration: 'none'}}>
+                    <Link to="/" className="login-container-link">
                         <div className='login-logo-container'>
                             <img className='login-logo' src={require('../../assets/amazon-logo-login.png')} alt="amazon-logo"/>
                             <span className="login-logo-country">.ca</span>

@@ -109,12 +109,12 @@ function checkout(e) {
                 {displayProduct.name}
               </h1>
             </div>    
-            <div style={{marginTop:"15px"}}>    
-              <span className="product-product-subtotal" style={{marginLeft: "0", marginRight: "22px", paddingLeft: "5px"}}> <strong>${displayProduct.price}</strong></span>
+            <div className="product-price-container">    
+              <span className="product-product-subtotal product-product-subtotal-margin"> <strong>${displayProduct.price}</strong></span>
               <div style={{borderBottom: "1px solid #e7e7e7", marginTop: "20px"}}></div> 
             </div>
             <div>    
-              <h1 className="product-product-subtotal" style={{fontSize: "16px!important", lineHeight: "24px!important", fontFamily: "sans serif", fontWeight: "700"}}>About this item</h1> 
+              <h1 className="product-product-subtotal product-product-subtotal-font ">About this item</h1> 
               <li>{displayProduct.description}</li>
             </div>    
           </div>
@@ -122,16 +122,14 @@ function checkout(e) {
       </div>
       <div className='product-right'>
         <div className='subtotal'>
-          <span className="product-product-subtotal" style={{marginLeft: "0", marginRight: "auto", paddingLeft: "5px"}}> <strong>${displayProduct.price / 100}</strong></span>
+          <span className="product-product-subtotal product-product-subtotal-margin"> <strong>${displayProduct.price / 100}</strong></span>
           {/* if statement here product.inventory !== 0*/}
-          { displayProduct.inventory !== 0 ? <p className="product-product-subtotal" style={{marginLeft: "0", marginRight: "auto", paddingLeft: "5px", color: "#007600!important", fontSize: "14px!important",
-          lineHeight: "20px!important"}}>In stock.</p> :
-          <p className="product-product-subtotal" style={{marginLeft: "0", marginRight: "auto", paddingLeft: "5px", color: "#007600!important", fontSize: "14px!important",
-          lineHeight: "20px!important"}}>Out of stock.</p> }
+          { displayProduct.inventory !== 0 ? <p className="product-product-subtotal product-product-subtotal-margin product-product-subtotal-font-and-color product-product-subtotal-font-and-color">In stock.</p> :
+          <p className="product-product-subtotal product-product-subtotal-margin product-product-subtotal-font-and-color product-product-subtotal-font-and-color">Out of stock.</p> }
           <span>Quantity:</span>
-          <select style={{border: "1px solid #DDD", borderRadius: "4px 4px 4px 4px", padding: "3px"}}>{[1,2,3,4,5].slice(0, displayProduct.inventory < 5 ? displayProduct.inventory : 5).map(opt => (<option value={opt}>{opt}</option>)) }</select>
+          <select className="product-add-to-cart-dropdown">{[1,2,3,4,5].slice(0, displayProduct.inventory < 5 ? displayProduct.inventory : 5).map(opt => (<option value={opt}>{opt}</option>)) }</select>
           <button onClick={(e)=> addToCart(displayProduct, e)}>Add to Cart</button>
-          <button style={{background: "#FFA41C" , borderColor: "#FF8F00"}} onClick={(e)=> checkout(e)}>Buy now</button>
+          <button className="product-add-to-cart-dropdown-color" onClick={(e)=> checkout(e)}>Buy now</button>
         </div>
       </div>
     </div>

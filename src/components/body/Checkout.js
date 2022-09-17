@@ -143,7 +143,7 @@ function Checkout() {
   return (
     <>
         <div className="checkout-container">
-            <Link to="/"><img src={require('../../assets/amazon-logo-login.png')} style={{marginLeft: "250px"}} alt="Amazon-logo"/></Link>
+            <Link to="/"><img className="checkout-container-margin" src={require('../../assets/amazon-logo-login.png')} alt="Amazon-logo"/></Link>
             <span className="checkout-span">.ca</span>
             <h1 className="checkout-heading">Checkout (<span className="checkout-items">{total_items} items</span>)</h1>   
         </div>
@@ -155,17 +155,17 @@ function Checkout() {
                     <label className="checkout-card-information">{user.address}</label>
                 </div>
             </div> 
-            <div className="checkout-part" style={{paddingBottom: "125px"}}>
-                <span className="checkout-list">2</span> <span className="checkout-list-steps">Payment method</span> <span className="checkout-mastercard" style={{marginLeft: "30px"}}>MasterCard</span>
+            <div className="checkout-part checkout-part-padding">
+                <span className="checkout-list">2</span> <span className="checkout-list-steps">Payment method</span> <span className="checkout-mastercard checkout-master-card-margin">MasterCard</span>
                 {/* Enter credit card */}
                 <div className="checkout-card-label">
                     <label for="card-number" className="checkout-card-information">Card Information</label>
                 </div>
                 <form autocomplete="off">
                     <div className="checkout-card-number-input">
-                        <input class="checkout-input" type="text" placeholder="Card Number" id="card-number" style={{marginTop: "13px"}} 
+                        <input className="checkout-input checkout-input-margin" type="text" placeholder="Card Number" id="card-number" 
                           value={cardNumber}/>
-                        <div style={{display:"flex"}}>
+                        <div className="checkout-card-icons">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="64px" height="64px">
                           <path fill="#1565C0" d="M45,35c0,2.209-1.791,4-4,4H7c-2.209,0-4-1.791-4-4V13c0-2.209,1.791-4,4-4h34c2.209,0,4,1.791,4,4V35z"/>
                           <path fill="#FFF" d="M15.186 19l-2.626 7.832c0 0-.667-3.313-.733-3.729-1.495-3.411-3.701-3.221-3.701-3.221L10.726 30v-.002h3.161L18.258 19H15.186zM17.689 30L20.56 30 22.296 19 19.389 19zM38.008 19h-3.021l-4.71 11h2.852l.588-1.571h3.596L37.619 30h2.613L38.008 19zM34.513 26.328l1.563-4.157.818 4.157H34.513zM26.369 22.206c0-.606.498-1.057 1.926-1.057.928 0 1.991.674 1.991.674l.466-2.309c0 0-1.358-.515-2.691-.515-3.019 0-4.576 1.444-4.576 3.272 0 3.306 3.979 2.853 3.979 4.551 0 .291-.231.964-1.888.964-1.662 0-2.759-.609-2.759-.609l-.495 2.216c0 0 1.063.606 3.117.606 2.059 0 4.915-1.54 4.915-3.752C30.354 23.586 26.369 23.394 26.369 22.206z"/>
@@ -188,7 +188,7 @@ function Checkout() {
                         </div>
                     </div>
                     <div className="checkout-card-number-input">
-                        <input class="checkout-input" type="text" placeholder="MM/YY" id="card-expire-date" style={{marginRight: "10px"}}
+                        <input class="checkout-input checkout-card-number-input-margin" type="text" placeholder="MM/YY" id="card-expire-date" 
                           value={expireDate}/>
                         <input class="checkout-input" type="text" placeholder="CVC" id="card-cvc"
                           value={cvc}/>
@@ -204,21 +204,21 @@ function Checkout() {
           <img className='cart-product-image' src={products[key][0].name && require(`../../assets/${products[key][0].img}`)} alt={`${products[key][0].name}`}/>
           <div className='cart-product-info'>
             <div className="cart-product-info-header">
-              <p className='cart-product-title' style={{fontSize: "18px", lineHeight: "24px", fontFamily: "sans-serif" }}>
+              <p className='cart-product-title cart-product-title-font'>
                 {products[key][0].name}
               </p> 
-              <span className="cart-product-title" style={{marginLeft: "auto", marginRight: "22px", color: "#0F1111", fontWeight: 600}}>
+              <span className="cart-product-title cart-product-title-margin">
                 ${products[key][0].price}
               </span>
             </div>
             <div className="cart-container-product-stock">
               {
                 products[key][0].inventory !== 0 ?
-                  <p className="cart-product-stock" style={{marginLeft: "0", marginRight: "auto", paddingLeft: "5px", color: "#007600", fontSize: "14px", lineHeight: "20px"}}>
+                  <p className="cart-product-stock cart-product-stock-style">
                     In stock
                   </p> 
                   : 
-                  <p className="cart-product-stock" style={{marginLeft: "0", marginRight: "auto", paddingLeft: "5px", color: "#007600", fontSize: "14px", lineHeight: "20px"}}>
+                  <p className="cart-product-stock cart-product-stock-style">
                     Out of stock
                   </p> 
               }
