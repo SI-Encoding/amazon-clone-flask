@@ -109,7 +109,7 @@ function Home() {
                         </div>
                     </div>
                     <FeaturedProducts/>
-                    <hr style={{height: "20px", border: "none", margin: "0"}}/>
+                    <hr className="body-hr"/>
                 </div>
             </div>
             {popup && 

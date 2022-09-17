@@ -29,3 +29,7 @@
     height: auto;
     line-height: 33px;
 }
+
+.header-cart-text-weight {
+    font-weight: 700;
+}

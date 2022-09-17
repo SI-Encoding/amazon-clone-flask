@@ -27,7 +27,7 @@ function HeaderBottom() {
                 <a className="header-menu-content width-1252">Computers</a>
             </div>
             <div className="header-menu-right">
-                <img src={require("../../assets/amazon-prime.jpg")} style={{height:"32px"}}/>
+                <img className="header-menu-right-height" src={require("../../assets/amazon-prime.jpg")}/>
             </div>
             {openMenu && <Sidebar setOpenMenu={setOpenMenu}/>}
         </div>

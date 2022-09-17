@@ -129,21 +129,21 @@ function Cart() {
           <img className='cart-product-image' src={products[key][0].name && require(`../../assets/${products[key][0].img}`)} alt={`${products[key][0].name}`}/>
           <div className='cart-product-info'>
             <div className="cart-product-info-header">
-              <p className='cart-product-title' style={{fontSize: "18px", lineHeight: "24px", fontFamily: "sans-serif" }}>
+              <p className='cart-product-title cart-product-title-font'>
                 {products[key][0].name}
               </p> 
-              <span className="cart-product-title" style={{marginLeft: "auto", marginRight: "22px", color: "#0F1111", fontWeight: 600}}>
+              <span className="cart-product-title cart-product-title-margin">
                 ${products[key][0].price}
               </span>
             </div>
             <div className="cart-container-product-stock">
               {
                 products[key][0].inventory !== 0 ?
-                  <p className="cart-product-stock" style={{marginLeft: "0", marginRight: "auto", paddingLeft: "5px", color: "#007600", fontSize: "14px", lineHeight: "20px"}}>
+                  <p className="cart-product-stock cart-product-stock-style">
                     In stock
                   </p> 
                   : 
-                  <p className="cart-product-stock" style={{marginLeft: "0", marginRight: "auto", paddingLeft: "5px", color: "#007600", fontSize: "14px", lineHeight: "20px"}}>
+                  <p className="cart-product-stock cart-product-stock-style">
                     Out of stock
                   </p> 
               }
@@ -227,7 +227,7 @@ function Cart() {
                 ${(total_cost)}
               </span>
           </span>
-          <span style={{marginLeft: "0", marginRight: "22px", paddingLeft: "5px"}}></span> 
+          <span className="cart-subtotal-margin"></span> 
         </div>    
         </div>
         <div className='cart-container-subtotal-checkout'>
@@ -238,7 +238,7 @@ function Cart() {
                   ${(total_cost)}
                 </span>
             </span>
-            <span style={{marginLeft: "0", marginRight: "auto", paddingLeft: "5px"}}></span>        
+            <span className="cart-checkout-margin"></span>        
             <button onClick={()=> checkout()}>Proceed to checkout</button>  
           </div>
         </div>

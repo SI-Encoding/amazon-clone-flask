@@ -29,13 +29,13 @@ function FeaturedProducts() {
   return (
         <div className="featured-container">
             <div className="featured-heading">
-                <h1 style={{fontSize: "25px"}}>
+                <h1>
                     Today's deals
                 </h1>
             </div>
             <div className="featured-products">
                 { products.map(product => (
-                    <li style={{listStyleType: "none"}}>
+                    <li>
                         <Link to={`product/:${product.name}/:${product.id}`} onClick={(e) => selectProduct(product)}>
                             <img className="featured-image" src={require(`../../assets/${product.img}`)} alt={`${product.name}`}/>
                         </Link>

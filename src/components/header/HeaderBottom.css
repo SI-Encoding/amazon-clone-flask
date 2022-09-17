@@ -40,6 +40,10 @@
     color: #FFF;
     line-height: 12px;
 }
+
+.header-menu-right-height {
+    height:32px;
+}
 @media only screen and (max-width: 1252px) {
     .width-1252 {
       display:none;

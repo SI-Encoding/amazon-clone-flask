@@ -10,6 +10,10 @@
     border-bottom: 1px solid lightgray;
 }
 
+.checkout-container-margin {
+    margin-left: 250px;
+}
+
 .checkout-span {
     font-size: 11px;
     margin-right: 240px;
@@ -60,6 +64,10 @@
     font-weight: 700;
 }
 
+.checkout-master-card-margin {
+    margin-left: 30px;
+}
+
 .checkout-card-information {
     color: #838383;
     font-weight: 500;
@@ -83,10 +91,22 @@
     display: flex;
 }
 
+.checkout-card-number-input-margin {
+    margin-right: 10px;
+}
+
 .checkout-input {
     padding: 0px 10px;
     height: 33px;
     pointer-events: none;
+}
+
+.checkout-input-margin {
+    margin-top: 13px;
+}
+
+.checkout-card-icons {
+    display:flex;
 }
 
 .checkout-right-container {
@@ -137,6 +157,10 @@
     border-bottom: 1px solid lightgray;
 }
 
+.checkout-part-padding {
+    padding-bottom: 125px;
+}
+
 .checkout-total {
     color: #b12704;    
     font-size: 16px;
@@ -165,4 +189,26 @@
 
 .subtotal-right-margin {
     margin-left: auto;
+}
+
+.cart-product-title-font {
+    font-size: 18px;
+    line-height: 24px;
+    font-family: 'sans-serif';
+}
+
+.cart-product-title-margin {
+    margin-left: auto;
+    margin-right: 22px;
+    color: #0F1111;
+    font-weight: 600;
+}
+
+.cart-product-stock-style {
+    margin-left: 0;
+    margin-right: auto;
+    padding-left: 5px;
+    color: #007600;
+    font-size: 14px;
+    line-height: 20px;
 }

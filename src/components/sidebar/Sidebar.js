@@ -60,8 +60,8 @@ export default function Sidebar({setOpenMenu}) {
                  Help & Settings
                 </h4>
                 <a>Your Account</a>
-                <a><img src={Globe} style={{width: '15px', height: '15px', marginLeft: '0', marginRight: '10px'}}/>English</a>
-                <a><img src={Flag} style={{width: '20px', height: '15px', marginLeft: '0', marginRight: '5px'}}/>Canada</a>
+                <a><img className="menu-globe-icon" src={Globe}/>English</a>
+                <a><img className="menu-flag-icon" src={Flag}/>Canada</a>
                 <a>Help</a>
                 <a>Sign in</a>
             </div>

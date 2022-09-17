@@ -44,7 +44,7 @@ export default function Order() {
                     </div>
                     <div className="Order-container-item-3">
                         <span className="Order-container-item">SHIP TO</span> 
-                        <span className="Order-container-item" style={{color: "#197f91"}}>{user.firstName} {user.lastName}</span>
+                        <span className="Order-container-item order-container-item-color">{user.firstName} {user.lastName}</span>
                     </div>
                     <span className="Order-container-item">ORDER # {order.id}</span>
                 </div>

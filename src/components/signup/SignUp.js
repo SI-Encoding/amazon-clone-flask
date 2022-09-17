@@ -44,7 +44,7 @@ function SignUp() {
     }
     return (
         <div className='login-container'>
-            <Link to="/" style={{textDecoration: 'none'}}>
+            <Link to="/" className="login-container-link">
                 <div className='login-logo-container'>
                     <img className='login-logo' src={require('../../assets/amazon-logo-login.png')} alt="amazon-logo"/>
                     <span className="login-logo-country">.ca</span>
@@ -66,11 +66,11 @@ function SignUp() {
                         <h5> Address </h5>
                         <input className="signup-input" value={address} onChange={(e) => setAddress(e.target.value)} placeholder="City and postal code"/>
                         <h5> Password </h5>
-                        <input className="signup-input" type='password' style={{marginBottom: "0px"}} value={password} onChange={(e) => setPassword(e.target.value)} placeholder="At least 6 characters"/>
+                        <input className="signup-input signup-input-margin" type='password' value={password} onChange={(e) => setPassword(e.target.value)} placeholder="At least 6 characters"/>
                         <span className="signup-pasword">Passwords must consist of at least 6 characters. </span>
                         <h5 style={{marginTop: "12px"}}> Password again </h5>
                         <input className="signup-input" type='password' value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)}/>
-                        <button type='submit' style={{marginBottom: "10px"}} className='login-sign-in' disabled={!checkAllFields()} onClick={(e)=> signUp(e)}>Create account</button>
+                        <button type='submit' className='login-sign-in signup-input-button' disabled={!checkAllFields()} onClick={(e)=> signUp(e)}>Create account</button>
                     </div>
                         <p>Already have an account?</p>
                         <button className='login-create-account' onClick={(e)=> {navigate('/login')}}>Sign in</button>

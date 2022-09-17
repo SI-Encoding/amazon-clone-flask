@@ -5,7 +5,7 @@ function HeaderCart() {
   return (
     <div className="header-container-cart">
         <div className="header-container-cart-text">
-            <span className="header-cart-text" style={{fontWeight: "700"}}>
+            <span className="header-cart-text header-cart-text-weight">
                 Today's Deals
             </span>
         </div>
