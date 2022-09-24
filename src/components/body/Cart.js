@@ -1,10 +1,9 @@
 import React, {useEffect} from 'react'
 import './Cart.css'
-import {set_product_counter, set_products, set_total_cost, set_total_items} from '../../rootReducer'
 import {useSelector, useDispatch} from 'react-redux'
 import {Link, useNavigate} from 'react-router-dom'
 import calculateTotal from '../../helpers'
-
+import ProductQuantity from './ProductQuantity'
 
 function CartHeader() {
     return (
@@ -23,142 +22,6 @@ function ProductStock({product}) {
         {product.inventory !== 0 ? <p className="cart-product-stock cart-product-stock-style">In stock</p> : <p className="cart-product-stock cart-product-stock-style">Out of stock</p>}
         <p className="cart-container-product-author">Sold by<span className="cart-product-author">{product.seller}</span></p>
     </div>)
-}
-
-function ProductQuantityDecrementer({product, quantity}) {
-    const dispatch = useDispatch()
-    let products = useSelector(state => state.products)
-    let total_items = useSelector(state => state.total_items)
-    let product_counter = useSelector(state => state.product_counter)
-
-    async function removeFromCart(product) {
-        dispatch({
-          type: set_total_items,
-          total_items: --total_items
-        })
-        decrementCart(product)
-        dispatch({
-          type: set_total_cost,
-          total_cost: await calculateTotal(products)
-        })
-      }
-
-
-    async function decrementCart(product) {
-        if(!(product.id in products)) {
-          product_counter[product.id] = 0
-        } else {
-            products[product.id].pop()
-            product_counter[product.id] -= 1
-        }
-        dispatch({
-          type: set_products,
-          products: products
-      })
-        dispatch({
-          type: set_product_counter,
-          product_counter: product_counter
-      })
-    }
-
-    return (<div className="cart-container-product-quantity-decrement">
-                  {
-                    (quantity < 2) ?
-                      <span className="cart-product-quantity-decrement">
-                        -
-                      </span>
-                      :
-                      <span className="cart-product-quantity-decrement" onClick={() => removeFromCart(product)} disabled={quantity === 1}>
-                        -
-                      </span>
-                  }
-    </div>)
-}
-
-function ProductQuantityIncrementer({product}) {
-    const dispatch = useDispatch()
-    let products = useSelector(state => state.products)
-    let total_items = useSelector(state => state.total_items)
-    let product_counter = useSelector(state => state.product_counter)
-
-    async function addToCart(product) {
-        dispatch({
-            type: set_total_items,
-            total_items: ++total_items
-        })
-        incrementCart(product)
-        dispatch({
-          type: set_total_cost,
-          total_cost: await calculateTotal(products)
-        })
-    }
-
-    async function incrementCart(product) {
-        if(!(product.id in products)) {
-          products[product.id] = [product]
-          product_counter[product.id] = 1
-        } else {
-            products[product.id].push(product)
-            product_counter[product.id] += 1
-        }
-        dispatch({type: set_products, products: products})
-        dispatch({type: set_product_counter, product_counter: product_counter})
-    }
-
-    return (
-        <div className="cart-container-product-quantity-increment">
-                  <span className="cart-product-quantity-increment" onClick={() => addToCart(product)}>
-                      +
-                  </span>
-        </div>
-    )
-}
-
-function ProductQuantity({products, id1}) {
-    let product_counter = useSelector(state => state.product_counter)
-    let total_items = useSelector(state => state.total_items)
-
-    const dispatch = useDispatch()
-
-    async function clearFromCart(product) {
-        products[product.id].pop()
-        product_counter[product.id] -= 1
-        delete products[product.id]
-        delete product_counter[product.id]
-
-      dispatch({
-        type: set_products,
-        products: products
-    })
-      dispatch({
-        type: set_product_counter,
-        product_counter: product_counter
-    })
-      dispatch({
-        type: set_total_items,
-        total_items: --total_items
-      })
-      dispatch({
-          type: set_total_cost,
-          total_cost: await calculateTotal(products)
-        })
-    }
-
-    return (
-        <div className="cart-container-product-quantity">
-              <div className="cart-product-quantity">
-                <ProductQuantityDecrementer product={products[id1][0]} />
-                <div className="cart-container-product-quantity-label">
-                  <span className="cart-product-quantity-label">
-                    {product_counter[id1]}
-                  </span>
-                </div>
-              </div>
-                <ProductQuantityIncrementer product={products[id1][0]} />
-              <hr className="cart-product-quantity-divider"/>
-              <span className="cart-product-quantity-delete" onClick={() => clearFromCart(products[id1][0])}>Delete</span>
-            </div>
-    )
 }
 
 function CartEmpty() {
