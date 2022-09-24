@@ -25,10 +25,11 @@ function ProductStock({product}) {
     </div>)
 }
 
-function ProductQuantityDecrement({product, key, product_counter}) {
+function ProductQuantityDecrementer({product, quantity}) {
     const dispatch = useDispatch()
     let products = useSelector(state => state.products)
     let total_items = useSelector(state => state.total_items)
+    let product_counter = useSelector(state => state.product_counter)
 
     async function removeFromCart(product) {
         dispatch({
@@ -41,6 +42,7 @@ function ProductQuantityDecrement({product, key, product_counter}) {
           total_cost: await calculateTotal(products)
         })
       }
+
 
     async function decrementCart(product) {
         if(!(product.id in products)) {
@@ -61,19 +63,19 @@ function ProductQuantityDecrement({product, key, product_counter}) {
 
     return (<div className="cart-container-product-quantity-decrement">
                   {
-                    (product_counter[key] < 2) ?
+                    (quantity < 2) ?
                       <span className="cart-product-quantity-decrement">
                         -
                       </span>
                       :
-                      <span className="cart-product-quantity-decrement" onClick={() => removeFromCart(product)} disabled={product_counter[key] === 1}>
+                      <span className="cart-product-quantity-decrement" onClick={() => removeFromCart(product)} disabled={quantity === 1}>
                         -
                       </span>
                   }
     </div>)
 }
 
-function ProductQuantityIncrement({product}) {
+function ProductQuantityIncrementer({product}) {
     const dispatch = useDispatch()
     let products = useSelector(state => state.products)
     let total_items = useSelector(state => state.total_items)
@@ -112,21 +114,49 @@ function ProductQuantityIncrement({product}) {
     )
 }
 
-function ProductQuantity({products, product_counter, addToCart, removeFromCart, id, clearFromCart}) {
-    console.log("HELLO", products, id);
+function ProductQuantity({products, id1}) {
+    let product_counter = useSelector(state => state.product_counter)
+    let total_items = useSelector(state => state.total_items)
+
+    const dispatch = useDispatch()
+
+    async function clearFromCart(product) {
+        products[product.id].pop()
+        product_counter[product.id] -= 1
+        delete products[product.id]
+        delete product_counter[product.id]
+
+      dispatch({
+        type: set_products,
+        products: products
+    })
+      dispatch({
+        type: set_product_counter,
+        product_counter: product_counter
+    })
+      dispatch({
+        type: set_total_items,
+        total_items: --total_items
+      })
+      dispatch({
+          type: set_total_cost,
+          total_cost: await calculateTotal(products)
+        })
+    }
+
     return (
         <div className="cart-container-product-quantity">
               <div className="cart-product-quantity">
-                <ProductQuantityDecrement product={products[id][0]} key={id} product_counter={product_counter} removeFromCart={removeFromCart} />
+                <ProductQuantityDecrementer product={products[id1][0]} />
                 <div className="cart-container-product-quantity-label">
                   <span className="cart-product-quantity-label">
-                    {product_counter[id]}
+                    {product_counter[id1]}
                   </span>
                 </div>
               </div>
-                <ProductQuantityIncrement product={products[id][0]} addToCart={addToCart} />
+                <ProductQuantityIncrementer product={products[id1][0]} />
               <hr className="cart-product-quantity-divider"/>
-              <span className="cart-product-quantity-delete" onClick={() => clearFromCart(products[id][0])}>Delete</span>
+              <span className="cart-product-quantity-delete" onClick={() => clearFromCart(products[id1][0])}>Delete</span>
             </div>
     )
 }
@@ -162,62 +192,29 @@ function SubTotal({total_items, total_cost}) {
     return (<span className="cart-container-subtotal">Subtotal ({total_items} items): <span className="cart-subtotal">${(total_cost)}</span></span>)
 }
 
-function CartProduct({products, product_counter, addToCart, removeFromCart, clearFromCart, id1, calculateTotal}) {
+function CartProduct({products, id1}) {
     return (<div className='cart-product' key={products[id1][0].id}>
           <img className='cart-product-image' src={products[id1][0].name && require(`../../assets/${products[id1][0].img}`)} alt={`${products[id1][0].name}`}/>
           <div className='cart-product-info'>
             <ProductHeader product={products[id1][0]}/>
             <ProductStock product={products[id1][0]}/>
-            <div>
-              <li>
-                {products[id1][0].description}
-              </li>
-            </div>
-            <ProductQuantity products={products} product_counter={product_counter} addToCart={addToCart} removeFromCart={removeFromCart} id={id1} clearFromCart={clearFromCart} calculateTotal={calculateTotal}/>
+            <div>{products[id1][0].description}</div>
+            <ProductQuantity products={products} id1={id1} />
           </div>
         </div>)
 }
 
 function CartMain({
       products,
-      product_counter,
-      addToCart,
-      removeFromCart,
       total_items,
       total_cost
 }) {
-    const dispatch = useDispatch()
-
-    async function clearFromCart(product) {
-        products[product.id].pop()
-        product_counter[product.id] -= 1
-        delete products[product.id]
-        delete product_counter[product.id]
-
-      dispatch({
-        type: set_products,
-        products: products
-    })
-      dispatch({
-        type: set_product_counter,
-        product_counter: product_counter
-    })
-      dispatch({
-        type: set_total_items,
-        total_items: --total_items
-      })
-      dispatch({
-          type: set_total_cost,
-          total_cost: calculateTotal(products)
-        })
-    }
-
     return (<div className='cart-container-products'>
             <CartHeader/>
         {/* needs if statement here when product is removed*/}
         {Object.entries(products).length !== 0 ? (Object.keys(products).map((key) => (
             products[key][0] &&
-            <CartProduct products={products} product_counter={product_counter} addToCart={addToCart} removeFromCart={removeFromCart} clearFromCart={clearFromCart} id1={key} calculateTotal={calculateTotal}/>
+            <CartProduct products={products} id1={key} />
         )))
          :
         (<CartEmpty />)
