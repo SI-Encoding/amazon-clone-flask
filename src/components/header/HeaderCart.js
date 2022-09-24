@@ -1,44 +1,22 @@
 import React from 'react'
 import './HeaderCart.css'
 
+function Deal({key, title, weight=0}) {
+    return (
+        <div className="header-container-cart-text">
+            <span className={`header-cart-text${weight === 1 ? " header-cart-text-weight" : ""}`}>
+                {title}
+            </span>
+        </div>
+    )
+}
+
 function HeaderCart() {
+    let arr = ["Today's Deals", "Watched Deals", "Outlet Deals", "Warehouse Deals", "Coupons", "eBook Deals", "Subscribe & Save"];
+
   return (
     <div className="header-container-cart">
-        <div className="header-container-cart-text">
-            <span className="header-cart-text header-cart-text-weight">
-                Today's Deals
-            </span>
-        </div>
-        <div className="header-container-cart-text">
-            <span className="header-cart-text">
-                Watched Deals
-            </span>
-        </div>
-        <div className="header-container-cart-text">
-            <span className="header-cart-text">
-                Outlet Deals
-            </span>
-        </div>
-        <div className="header-container-cart-text">
-            <span className="header-cart-text">
-                Warehouse Deals
-            </span>
-        </div>
-        <div className="header-container-cart-text">
-            <span className="header-cart-text">
-                Coupons
-            </span>
-        </div>
-        <div className="header-container-cart-text">
-            <span className="header-cart-text">
-                eBook Deals
-            </span>
-        </div>
-        <div className="header-container-cart-text">
-            <span className="header-cart-text">
-                Subscribe & Save
-            </span>
-        </div>
+        {arr.map((item, i) => {return (<Deal key={i} title={item} weight={i === 0 ? 1 : 0} />)})}
     </div>
   )
 }
