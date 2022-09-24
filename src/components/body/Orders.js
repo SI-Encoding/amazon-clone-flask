@@ -1,5 +1,5 @@
 import React,{useState,useEffect} from 'react'
-import './Order.css'
+import './Orders.css'
 import {useSelector, useDispatch} from 'react-redux'
 import axios from 'axios'
 import {useNavigate} from 'react-router-dom'
