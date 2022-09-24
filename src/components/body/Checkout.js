@@ -8,6 +8,7 @@ import {ReactComponent as VisaLogo} from '../../assets/icons8-visa.svg';
 import {ReactComponent as MasterCard} from '../../assets/icons8-mastercard.svg';
 import {ReactComponent as Discover} from '../../assets/icons8-discover.svg';
 import {ReactComponent as AmericanExpress} from '../../assets/icons8-amex.svg';
+import calculateTotal from '../../helpers'
 
 function ShippingAddress({user}) {
     return (<div className="checkout-part">
@@ -59,7 +60,7 @@ function Review() {
     </div>)
 }
 
-function CartClearButton({product, calculateTotal}) {
+function CartClearButton({product}) {
     const dispatch = useDispatch()
 
     let products = useSelector(state => state.products)
@@ -84,7 +85,10 @@ function CartClearButton({product, calculateTotal}) {
           type: set_total_items,
           total_items: --total_items
       })
-        calculateTotal()
+        dispatch({
+          type: set_total_cost,
+          total_cost: await calculateTotal(products)
+        })
     }
 
     return (
@@ -92,7 +96,7 @@ function CartClearButton({product, calculateTotal}) {
     )
 }
 
-function ProductQuantityDecrementer({product, quantity, calculateTotal}) {
+function ProductQuantityDecrementer({product, quantity}) {
     const dispatch = useDispatch()
 
     let products = useSelector(state => state.products)
@@ -105,7 +109,10 @@ function ProductQuantityDecrementer({product, quantity, calculateTotal}) {
           total_items: --total_items
         })
         decrementCart(product)
-        calculateTotal()
+        dispatch({
+          type: set_total_cost,
+          total_cost: await calculateTotal(products)
+        })
     }
     async function decrementCart(product) {
         if(!(product.id in products)) {
@@ -136,7 +143,7 @@ function ProductQuantityDecrementer({product, quantity, calculateTotal}) {
     )
 }
 
-function ProductQuantityIncrementer({product, calculateTotal}) {
+function ProductQuantityIncrementer({product}) {
     const dispatch = useDispatch()
 
     let products = useSelector(state => state.products)
@@ -149,7 +156,10 @@ function ProductQuantityIncrementer({product, calculateTotal}) {
           total_items: ++total_items
         })
         incrementCart(product)
-        calculateTotal()
+        dispatch({
+          type: set_total_cost,
+          total_cost: await calculateTotal(products)
+        })
     }
     async function incrementCart(product) {
         if(!(product.id in products)) {
@@ -179,20 +189,20 @@ function ProductQuantityIncrementer({product, calculateTotal}) {
 
 }
 
-function ProductQuantity({product, quantity, calculateTotal}) {
+function ProductQuantity({product, quantity}) {
     return (
         <div className="cart-container-product-quantity">
               <div className="cart-product-quantity">
-                <ProductQuantityDecrementer product={product} calculateTotal={calculateTotal}/>
+                <ProductQuantityDecrementer product={product} />
                 <div className="cart-container-product-quantity-label">
                   <span className="cart-product-quantity-label">
                     {quantity}
                   </span>
                 </div>
-                <ProductQuantityIncrementer product={product} calculateTotal={calculateTotal}/>
+                <ProductQuantityIncrementer product={product} />
               </div>
               <hr className="cart-product-quantity-divider"/>
-              <CartClearButton calculateTotal={calculateTotal}/>
+              <CartClearButton />
             </div>
     )
 }
@@ -220,7 +230,7 @@ function ProductStock({product}) {
     )
 }
 
-function ProductInfo({product, quantity, calculateTotal}) {
+function ProductInfo({product, quantity}) {
     return (
         <div className='cart-product-info'>
             <div className="cart-product-info-header">
@@ -233,16 +243,16 @@ function ProductInfo({product, quantity, calculateTotal}) {
             </div>
             <ProductStock product={product}/>
             <p>{product.description}</p>
-            <ProductQuantity product={product} quantity={quantity} calculateTotal={calculateTotal}/>
+            <ProductQuantity product={product} quantity={quantity} />
           </div>
     )
 }
 
-function Product({product, product_counter, id1, calculateTotal}) {
+function Product({product, product_counter, id1}) {
     return (
         <div className='cart-product' key={product.id}>
           <img className='cart-product-image' src={product.name && require(`../../assets/${product.img}`)} alt={`${product.name}`}/>
-          <ProductInfo product={product} quantity={product_counter[id1]} calculateTotal={calculateTotal}/>
+          <ProductInfo product={product} quantity={product_counter[id1]} />
         </div>
     )
 }
@@ -274,13 +284,13 @@ function EmptyCart() {
     )
 }
 
-function Products({products, calculateTotal}) {
+function Products({products}) {
     let product_counter = useSelector(state => state.product_counter)
 
     return (
         <div>
             {
-                Object.entries(products).length !== 0 ? (Object.keys(products).map((key) => (products[key][0] && <Product product={products[key][0]} product_counter={product_counter} id1={key} calculateTotal={calculateTotal}/>)))
+                Object.entries(products).length !== 0 ? (Object.keys(products).map((key) => (products[key][0] && <Product product={products[key][0]} product_counter={product_counter} id1={key} />)))
                 : (<EmptyCart />)}
         </div>
     )
@@ -380,19 +390,8 @@ function Checkout() {
     const [cvc, setCvc] = useState('111')
     const dispatch = useDispatch()
 
-    async function calculateTotal() {
-        let total_for_product = 0;
-        Object.entries(products).map(item => {
-          total_for_product += item[1][0].price * item[1].length;
-        })
-        dispatch({
-          type: set_total_cost,
-          total_cost: total_for_product
-        })
-    }
-
     useEffect(()=>{
-        calculateTotal()
+        calculateTotal(products)
     },[product_counter,total_cost,products])
 
   return (
@@ -407,7 +406,7 @@ function Checkout() {
             <ShippingAddress user={user}/>
             <Payment card_number={cardNumber} expiry_date={expireDate} cvv={cvc}/>
             <Review />
-            <Products products={products} calculateTotal={calculateTotal}/>
+            <Products products={products} />
             <div>
                 <CheckoutButton  card_number={cardNumber} expiry_date={expireDate} cvv={cvc} />
                 <span className="checkout-total">Order Total: ${total_cost} </span>

@@ -3,6 +3,7 @@ import './Cart.css'
 import {set_product_counter, set_products, set_total_cost, set_total_items} from '../../rootReducer'
 import {useSelector, useDispatch} from 'react-redux'
 import {Link, useNavigate} from 'react-router-dom'
+import calculateTotal from '../../helpers'
 
 
 function CartHeader() {
@@ -24,7 +25,7 @@ function ProductStock({product}) {
     </div>)
 }
 
-function ProductQuantityDecrement({product, key, product_counter, calculateTotal}) {
+function ProductQuantityDecrement({product, key, product_counter}) {
     const dispatch = useDispatch()
     let products = useSelector(state => state.products)
     let total_items = useSelector(state => state.total_items)
@@ -35,7 +36,10 @@ function ProductQuantityDecrement({product, key, product_counter, calculateTotal
           total_items: --total_items
         })
         decrementCart(product)
-        calculateTotal()
+        dispatch({
+          type: set_total_cost,
+          total_cost: await calculateTotal(products)
+        })
       }
 
     async function decrementCart(product) {
@@ -69,7 +73,7 @@ function ProductQuantityDecrement({product, key, product_counter, calculateTotal
     </div>)
 }
 
-function ProductQuantityIncrement({product, calculateTotal}) {
+function ProductQuantityIncrement({product}) {
     const dispatch = useDispatch()
     let products = useSelector(state => state.products)
     let total_items = useSelector(state => state.total_items)
@@ -81,7 +85,10 @@ function ProductQuantityIncrement({product, calculateTotal}) {
             total_items: ++total_items
         })
         incrementCart(product)
-        calculateTotal()
+        dispatch({
+          type: set_total_cost,
+          total_cost: await calculateTotal(products)
+        })
     }
 
     async function incrementCart(product) {
@@ -105,19 +112,19 @@ function ProductQuantityIncrement({product, calculateTotal}) {
     )
 }
 
-function ProductQuantity({products, product_counter, addToCart, removeFromCart, id, clearFromCart, calculateTotal}) {
+function ProductQuantity({products, product_counter, addToCart, removeFromCart, id, clearFromCart}) {
     console.log("HELLO", products, id);
     return (
         <div className="cart-container-product-quantity">
               <div className="cart-product-quantity">
-                <ProductQuantityDecrement product={products[id][0]} key={id} product_counter={product_counter} removeFromCart={removeFromCart}  calculateTotal={calculateTotal}/>
+                <ProductQuantityDecrement product={products[id][0]} key={id} product_counter={product_counter} removeFromCart={removeFromCart} />
                 <div className="cart-container-product-quantity-label">
                   <span className="cart-product-quantity-label">
                     {product_counter[id]}
                   </span>
                 </div>
               </div>
-                <ProductQuantityIncrement product={products[id][0]} addToCart={addToCart} calculateTotal={calculateTotal}/>
+                <ProductQuantityIncrement product={products[id][0]} addToCart={addToCart} />
               <hr className="cart-product-quantity-divider"/>
               <span className="cart-product-quantity-delete" onClick={() => clearFromCart(products[id][0])}>Delete</span>
             </div>
@@ -177,8 +184,7 @@ function CartMain({
       addToCart,
       removeFromCart,
       total_items,
-      total_cost,
-    calculateTotal
+      total_cost
 }) {
     const dispatch = useDispatch()
 
@@ -200,7 +206,10 @@ function CartMain({
         type: set_total_items,
         total_items: --total_items
       })
-      calculateTotal()
+      dispatch({
+          type: set_total_cost,
+          total_cost: calculateTotal(products)
+        })
     }
 
     return (<div className='cart-container-products'>
@@ -220,7 +229,7 @@ function CartMain({
     </div>)
 }
 
-function CheckOut({total_items, total_cost, calculateTotal}) {
+function CheckOut({total_items, total_cost}) {
     const user = useSelector(state => state.user)
     const navigate = useNavigate();
 
@@ -242,32 +251,20 @@ function CheckOut({total_items, total_cost, calculateTotal}) {
 }
 
 function Cart() {
-    const dispatch = useDispatch()
     let products = useSelector(state => state.products)
     let total_items = useSelector(state => state.total_items)
     let product_counter = useSelector(state => state.product_counter)
     let total_cost = useSelector(state => state.total_cost)
 
-    async function calculateTotal() {
-      let total_for_product = 0;
-      Object.entries(products).map(item => {
-        total_for_product += item[1][0].price * item[1].length;
-      })
-      dispatch({
-        type: set_total_cost,
-        total_cost: total_for_product
-      })
-    }
-
     useEffect(()=>{
-      calculateTotal()
+      calculateTotal(products)
     },[product_counter,total_cost,products])
 
   return (
     <div className="cart-container">       
       <div className="cart-body">
-        <CartMain products={products} product_counter={product_counter} total_items={total_items} total_cost={total_cost} calculateTotal={calculateTotal} />
-        <CheckOut total_items={total_items} total_cost={total_cost} calculateTotal={calculateTotal} />
+        <CartMain products={products} product_counter={product_counter} total_items={total_items} total_cost={total_cost} />
+        <CheckOut total_items={total_items} total_cost={total_cost} />
       </div>
     </div>
   )

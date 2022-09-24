@@ -4,8 +4,9 @@ import {useSelector, useDispatch} from 'react-redux'
 import axios from 'axios'
 import {set_total_items, set_products, set_product_counter, set_total_cost} from '../../rootReducer'
 import {useNavigate} from 'react-router-dom'
+import calculateTotal from '../../helpers'
 
-function AddToCart({displayProduct, calculateTotal}) {
+function AddToCart({displayProduct}) {
   let total_items = useSelector(state => state.total_items)
   let product_counter = useSelector(state => state.product_counter)
   const user = useSelector(state => state.user)
@@ -40,7 +41,11 @@ function AddToCart({displayProduct, calculateTotal}) {
         })
         updateToCart(product)
     }
-    calculateTotal()
+
+    dispatch({
+      type: set_total_cost,
+      total_cost: await calculateTotal(products)
+    })
   }
 
   async function updateToCart(product) {
@@ -144,18 +149,6 @@ function Product() {
   },[])
   console.log(displayProduct)
 
-
-async function calculateTotal() {
-  let total_for_product = 0;
-  Object.entries(products).map(item => {
-    total_for_product += item[1][0].price * item[1].length;
-  })
-  dispatch({
-    type: set_total_cost,
-    total_cost: total_for_product
-  })
-}
-
   return (
     <div className="product-left-and-right" >
       <div className='product-main-container'>
@@ -164,7 +157,7 @@ async function calculateTotal() {
           <ProductInfo displayProduct={displayProduct}/>
         </div>    
       </div>
-      <AddToCart displayProduct={displayProduct} calculateTotal={calculateTotal} />
+      <AddToCart displayProduct={displayProduct} />
     </div>
   )
 }
