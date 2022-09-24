@@ -5,30 +5,15 @@ import axios from 'axios'
 import {set_total_items, set_products, set_product_counter, set_total_cost} from '../../rootReducer'
 import {useNavigate} from 'react-router-dom'
 
-function Product() {
-  const productId = useSelector(state => state.selectedProduct)
-  let products = useSelector(state => state.products)
+function AddToCart({displayProduct, calculateTotal}) {
   let total_items = useSelector(state => state.total_items)
   let product_counter = useSelector(state => state.product_counter)
   const user = useSelector(state => state.user)
+
+  let products = useSelector(state => state.products)
+
   const dispatch = useDispatch()
   const navigate = useNavigate();
-  const [displayProduct, setDisplayProduct] = useState({})
-
-  useEffect(()=>{ 
-    async function fetchProduct() {
-      const res = await axios.get(`http://localhost:5000/product?product_id=${productId}`)
-        console.log("DATA...");
-        console.log(res.data);
-
-        res.data.data.img = "amazon-product-vacuum.jpg";
-      setDisplayProduct(res.data.data)
-
-    }
-    fetchProduct()
-  },[])
-  console.log(displayProduct)
-
 
   async function addMultiToCart(product, e) {
 
@@ -67,7 +52,7 @@ function Product() {
       products[product.id].push(product)
       product_counter[product.id] += 1
     }
-    
+
   dispatch({
     type: set_products,
     products: products
@@ -77,49 +62,16 @@ function Product() {
     product_counter: product_counter
   })
 }
-
-async function calculateTotal() {
-  let total_for_product = 0;
-  Object.entries(products).map(item => {
-    total_for_product += item[1][0].price * item[1].length;
-  })
-  dispatch({
-    type: set_total_cost,
-    total_cost: total_for_product
-  })
-}
-
 function checkout(e) {
-  if(user) { 
-    navigate('/checkout');  
+  if(user) {
+    navigate('/checkout');
   } else {
-    CheckoutToCart(displayProduct, e); 
+    CheckoutToCart(displayProduct, e);
     navigate('/login')
   }
 }
 
   return (
-    <div className="product-left-and-right" >
-      <div className='product-main-container'>
-        <div className='product-product' >
-          <img className='product-product-image' src={ displayProduct.img && require(`../../assets/${displayProduct.img}`)} alt={`${displayProduct.name}`}/>
-          <div className='product-product-info'>
-            <div className="product-product-info-header">
-              <h1 className='product-product-title'>
-                {displayProduct.name}
-              </h1>
-            </div>    
-            <div className="product-price-container">    
-              <span className="product-product-subtotal product-product-subtotal-margin"> <strong>${displayProduct.price}</strong></span>
-              <div style={{borderBottom: "1px solid #e7e7e7", marginTop: "20px"}}></div> 
-            </div>
-            <div>    
-              <h1 className="product-product-subtotal product-product-subtotal-font ">About this item</h1> 
-              <li>{displayProduct.description}</li>
-            </div>    
-          </div>
-        </div>    
-      </div>
       <div className='product-right'>
         <div className='subtotal'>
           <span className="product-product-subtotal product-product-subtotal-margin"> <strong>${displayProduct.price / 100}</strong></span>
@@ -132,6 +84,87 @@ function checkout(e) {
           <button className="product-add-to-cart-dropdown-color" onClick={(e)=> checkout(e)}>Buy now</button>
         </div>
       </div>
+  )
+}
+
+function ProductTitle({displayProduct}) {
+  return (<div className="product-product-info-header">
+    <h1 className='product-product-title'>
+      {displayProduct.name}
+    </h1>
+  </div>)
+}
+
+function ProductPrice({displayProduct}) {
+  return (<div className="product-price-container">
+    <span className="product-product-subtotal product-product-subtotal-margin"> <strong>${displayProduct.price}</strong></span>
+    <div className="empty-div-rename"></div>
+  </div>)
+}
+
+function ProductDescription({displayProduct}) {
+  return (<div>
+      <h1 className="product-product-subtotal product-product-subtotal-font ">About this item</h1>
+      <li>{displayProduct.description}</li>
+    </div>)
+}
+
+function ProductImage({displayProduct}) {
+  return (
+      <img className='product-product-image' src={displayProduct.img && require(`../../assets/${displayProduct.img}`)}
+           alt={`${displayProduct.name}`}/>)
+}
+
+function ProductInfo({displayProduct}) {
+  return (<div className='product-product-info'>
+    <ProductTitle displayProduct={displayProduct}/>
+    <ProductPrice displayProduct={displayProduct}/>
+    <ProductDescription displayProduct={displayProduct}/>
+  </div>)
+}
+
+function Product() {
+  const productId = useSelector(state => state.selectedProduct)
+  let products = useSelector(state => state.products)
+  const dispatch = useDispatch()
+  const navigate = useNavigate();
+  const [displayProduct, setDisplayProduct] = useState({})
+
+  useEffect(()=>{ 
+    async function fetchProduct() {
+      const res = await axios.get(`http://localhost:5000/product?product_id=${productId}`)
+        console.log("DATA...");
+        console.log(res.data);
+
+        res.data.data.img = "amazon-product-vacuum.jpg";
+      setDisplayProduct(res.data.data)
+
+    }
+    fetchProduct()
+  },[])
+  console.log(displayProduct)
+
+
+async function calculateTotal() {
+  let total_for_product = 0;
+  Object.entries(products).map(item => {
+    total_for_product += item[1][0].price * item[1].length;
+  })
+  dispatch({
+    type: set_total_cost,
+    total_cost: total_for_product
+  })
+}
+
+  return (
+    <div className="product-left-and-right" >
+      <div className='product-main-container'>
+        <div className='product-product' >
+          <ProductImage displayProduct={displayProduct}/>
+          <ProductInfo displayProduct={displayProduct}/>
+        </div>    
+      </div>
+      <AddToCart displayProduct={displayProduct} calculateTotal={calculateTotal} />
     </div>
   )
 }

@@ -162,3 +162,8 @@
     background: #FFA41C;
     border-color: #FF8F00;
 }
+
+.empty-div-rename {
+    border-bottom: 1px solid #e7e7e7;
+    margin-top: 20px;
+}
