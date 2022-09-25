@@ -55,36 +55,33 @@ function SubTotal({total_items, total_cost}) {
     return (<span className="cart-container-subtotal">Subtotal ({total_items} items): <span className="cart-subtotal">${(total_cost)}</span></span>)
 }
 
-function CartProduct({products, id1}) {
-    return (<div className='cart-product' key={products[id1][0].id}>
-          <img className='cart-product-image' src={products[id1][0].name && require(`../../assets/${products[id1][0].img}`)} alt={`${products[id1][0].name}`}/>
+function CartProduct({product, quantity}) {
+    return (<div className='cart-product' key={product.id}>
+          <img className='cart-product-image' src={product.name && require(`../../assets/${product.img}`)} alt={`${product.name}`}/>
           <div className='cart-product-info'>
-            <ProductHeader product={products[id1][0]}/>
-            <ProductStock product={products[id1][0]}/>
-            <div>{products[id1][0].description}</div>
-            <ProductQuantity products={products} id1={id1} />
+            <ProductHeader product={product}/>
+            <ProductStock product={product}/>
+            <div>{product.description}</div>
+            <ProductQuantity product={product} quantity={quantity}/>
           </div>
         </div>)
 }
 
-function CartMain({
-      products,
-      total_items,
-      total_cost
-}) {
+function CartMain({products, total_items, total_cost}) {
+    let product_counter = useSelector(state => state.product_counter)
+
     return (<div className='cart-container-products'>
             <CartHeader/>
         {/* needs if statement here when product is removed*/}
         {Object.entries(products).length !== 0 ? (Object.keys(products).map((key) => (
             products[key][0] &&
-            <CartProduct products={products} id1={key} />
+            <CartProduct product={products[key][0]} quantity={product_counter[key]} />
         )))
          :
         (<CartEmpty />)
         }
         <div className="cart-container-subtotal-container">
           <SubTotal total_items={total_items} total_cost={total_cost} />
-          <span className="cart-margin-subtotal" id="cart-margin-subtotal"/>
         </div>
     </div>)
 }
@@ -94,17 +91,12 @@ function CheckOut({total_items, total_cost}) {
     const navigate = useNavigate();
 
     function checkout() {
-      if (user) {
-        navigate('/checkout')
-      } else {
-        navigate('/login')
-      }
+      navigate(user ? '/checkout' : '/login')
     }
 
     return (<div className='cart-container-subtotal-checkout'>
           <div className='cart-subtotal-checkout'>
             <SubTotal total_items={total_items} total_cost={total_cost} />
-            <span className="cart-margin-checkout" id="cart-margin-checkout"/>
             <button onClick={()=> checkout()}>Proceed to checkout</button>
           </div>
         </div>)

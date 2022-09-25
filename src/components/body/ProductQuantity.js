@@ -1,6 +1,7 @@
 import {useDispatch, useSelector} from "react-redux";
 import {set_product_counter, set_products, set_total_cost, set_total_items} from "../../rootReducer";
 import calculateTotal from "../../helpers";
+import './ProductQuantity.css';
 
 
 function CartClearButton({product}) {
@@ -23,7 +24,7 @@ function CartClearButton({product}) {
 
     return (
         //<span className="cart-product-quantity-delete" onClick={() => clearFromCart(products[id1][0])}>Delete</span>
-        <span className="cart-product-quantity-delete" onClick={() => clearFromCart(product)}>Delete</span>
+        <span id="clear-cart" onClick={() => clearFromCart(product)}>Delete</span>
     )
 }
 
@@ -52,12 +53,12 @@ function ProductQuantityDecrementer({product, quantity}) {
     }
 
     return (
-        <div className="cart-container-product-quantity-decrement">
+        <div className="container-inc-dec" id="container-decrement">
                   {
                     (quantity < 2) ?
-                      <span className="cart-product-quantity-decrement"> - </span>
+                      <span id="decrement"> - </span>
                       :
-                      <span className="cart-product-quantity-decrement" onClick={() => removeFromCart(product)} disabled={quantity === 1}> - </span>
+                      <span id="decrement" onClick={() => removeFromCart(product)} disabled={quantity === 1}> - </span>
                   }
                 </div>
     )
@@ -95,8 +96,8 @@ function ProductQuantityIncrementer({product}) {
     }
 
     return (
-        <div className="cart-container-product-quantity-increment">
-                  <span className="cart-product-quantity-increment" onClick={() => addToCart(product)}>
+        <div className="container-inc-dec" id="container-increment">
+                  <span id="increment" onClick={() => addToCart(product)}>
                       +
                   </span>
                 </div>

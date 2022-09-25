@@ -1,4 +1,3 @@
-import {set_total_cost} from "./rootReducer";
 
 async function calculateTotal(products) {
   let total_for_product = 0;

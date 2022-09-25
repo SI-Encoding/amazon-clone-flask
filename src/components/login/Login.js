@@ -100,7 +100,6 @@ function SignIn({email, setEmail, verify, setVerify}) {
             const res = await axios({method:'post', url:'http://localhost:5000/login', data: {email: email, password: password},  headers: {"Content-Type": "multipart/form-data"}})
             console.log("HELLO:", res.data, res.status)
             if(res.status = 200){
-                console.log('HELLO')
                 setMobileNumber(res.data.mobile_number)
                 localStorage.setItem('session_token', res.data.session_token)
                 setVerify(true)

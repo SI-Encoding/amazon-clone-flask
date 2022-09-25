@@ -49,7 +49,6 @@ function AddToCart({displayProduct}) {
   }
 
   async function updateToCart(product) {
-    console.log(product)
     if(!(product.id in products)) {
       products[product.id] = [product]
       product_counter[product.id]= 1
@@ -58,23 +57,18 @@ function AddToCart({displayProduct}) {
       product_counter[product.id] += 1
     }
 
-  dispatch({
-    type: set_products,
-    products: products
-  })
-  dispatch({
-    type: set_product_counter,
-    product_counter: product_counter
-  })
+  dispatch({type: set_products, products: products})
+  dispatch({type: set_product_counter, product_counter: product_counter})
 }
-function checkout(e) {
-  if(user) {
-    navigate('/checkout');
-  } else {
-    CheckoutToCart(displayProduct, e);
-    navigate('/login')
+
+  function checkout(e) {
+    if(user) {
+      navigate('/checkout');
+    } else {
+      CheckoutToCart(displayProduct, e);
+      navigate('/login')
+    }
   }
-}
 
   return (
       <div className='product-right'>
@@ -130,24 +124,17 @@ function ProductInfo({displayProduct}) {
 
 function Product() {
   const productId = useSelector(state => state.selectedProduct)
-  let products = useSelector(state => state.products)
-  const dispatch = useDispatch()
-  const navigate = useNavigate();
   const [displayProduct, setDisplayProduct] = useState({})
 
   useEffect(()=>{ 
     async function fetchProduct() {
       const res = await axios.get(`http://localhost:5000/product?product_id=${productId}`)
-        console.log("DATA...");
-        console.log(res.data);
-
         res.data.data.img = "amazon-product-vacuum.jpg";
       setDisplayProduct(res.data.data)
 
     }
     fetchProduct()
   },[])
-  console.log(displayProduct)
 
   return (
     <div className="product-left-and-right" >

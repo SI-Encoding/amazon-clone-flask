@@ -46,7 +46,6 @@ function SignUpForm({signUpError, setSignUpError}) {
         e.preventDefault()
         try {
             const res = await axios({method:'post', url:'http://localhost:5000/register', data: {email: email, password: password, first_name:firstName, last_name:lastName, address:address,  mobile_number:mobile_number },  headers: {"Content-Type": "multipart/form-data"}})
-            console.log(res.data)
             if(res.status = 200){
                 setSignUpError(false)
                 navigate('/login')

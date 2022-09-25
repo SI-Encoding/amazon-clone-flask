@@ -74,7 +74,6 @@ export default function Orders() {
     useEffect(()=> {
         async function getOrders(){
             const res = await axios({method:'get', url:`http://localhost:5000/orders?user_id=${user.userId}`})
-            console.log(res.data.data)
             setOrders(res.data.data)
         }
         getOrders()

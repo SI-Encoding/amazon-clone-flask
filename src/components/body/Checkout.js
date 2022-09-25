@@ -178,7 +178,6 @@ function CheckoutButton({cardNumber, expiryDate, cvv}){
         const res = await axios({method:'post', url:'http://localhost:5000/charge', data: {amount: total_cost, token: "tok_visa"},  headers: {"Content-Type": "application/json"}})
           if (res.status == 200) {
             alert("Purchase has been successful")
-            console.log(products)
             const res = await axios({method:'post', url:'http://localhost:5000/order', data: {products: products, user_id: user.userId},  headers: {"Content-Type": "application/json"}})
             .then((res)=> {
               emptyCart()
