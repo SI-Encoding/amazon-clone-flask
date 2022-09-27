@@ -1,3 +1,8 @@
+from sqlalchemy.orm import mapper
+
+from models import *
+
+
 class Controller:
     def __init__(self, model, db):
         self.model = model
@@ -40,5 +45,14 @@ class Controller:
     def delete_one(self, item):
         item.delete()
         self.db.session.commit()
+
+from flask_sqlalchemy import SQLAlchemy
+db = SQLAlchemy()
+
+
+ProductController = Controller(Product, db)
+UserController = Controller(User, db)
+OrderController = Controller(Order, db)
+
 
 
