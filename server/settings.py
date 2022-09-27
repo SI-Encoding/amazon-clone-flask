@@ -2,21 +2,27 @@ import os
 from os.path import join, dirname
 from dotenv import load_dotenv
 
-dotenv_path = join(dirname(__file__), '../.env')
-load_dotenv(dotenv_path)
 
-PGUSER = os.environ.get("PGUSER")
-PGPASS = os.environ.get("PGPASS")
-PGHOST = os.environ.get("PGHOST")
-PGDB = os.environ.get("PGDB")
 
-SECRET_KEY = os.environ.get("SECRET_KEY")
+class Settings:
+    def __init__(self, env: str = 'dev'):
+        dotenv_path = join(dirname(__file__), f"../.env-{'dev' if env == 'dev' else 'production'}")
+        load_dotenv(dotenv_path)
 
-TWILIO_ACCOUNT_SID = os.environ.get("TWILIO_ACCOUNT_SID")
-TWILIO_AUTH_TOKEN = os.environ.get('TWILIO_AUTH_TOKEN')
+        self.PGUSER = os.environ.get("PGUSER")
+        self.PGPASS = os.environ.get("PGPASS")
+        self.PGHOST = os.environ.get("PGHOST")
+        self.PGDB = os.environ.get("PGDB")
 
-STRIPE_PUBLISHABLE_KEY = os.environ.get('STRIPE_PUBLISHABLE_KEY')
-STRIPE_SECRET_KEY = os.environ.get('STRIPE_SECRET_KEY')
+        self.SECRET_KEY = os.environ.get("SECRET_KEY")
 
-MY_PHONE_NUMBER = os.environ.get('MY_PHONE_NUMBER')
-PHONE_NUMBER = os.environ.get('PHONE_NUMBER')
+        self.TWILIO_ACCOUNT_SID = os.environ.get("TWILIO_ACCOUNT_SID")
+        self.TWILIO_AUTH_TOKEN = os.environ.get('TWILIO_AUTH_TOKEN')
+
+        self.STRIPE_PUBLISHABLE_KEY = os.environ.get('STRIPE_PUBLISHABLE_KEY')
+        self.STRIPE_SECRET_KEY = os.environ.get('STRIPE_SECRET_KEY')
+
+        self.MY_PHONE_NUMBER = os.environ.get('MY_PHONE_NUMBER')
+        self.PHONE_NUMBER = os.environ.get('PHONE_NUMBER')
+
+        self.DEBUG = os.environ.get('DEBUG')
