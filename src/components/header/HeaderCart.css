@@ -1,0 +1,35 @@
+.header-container-cart {
+    z-index: 1;
+    position: relative;
+    margin: 0;
+    padding: 0 9px 0 15px;
+    overflow: hidden;
+    border-bottom: 1px solid #e7e7e7;
+    border-top: 1px solid #e7e7e7;
+    border-top: 1px solid rgba(0,0,0,.17);
+    border-bottom: 1px solid rgba(0,0,0,.1);
+    white-space: nowrap;
+    height: 33px;
+    background: #fafafa;
+}
+
+.header-container-cart-text {
+    position: relative;
+    float: left;
+    height: 31px;
+    line-height: 33px;
+    color: #333;
+    font-size: 12px;
+    padding: 0 11px;
+}
+
+.header-cart-text {
+    font-family: "Amazon Ember", Arial, sans-serif;
+    font-size: 12px;
+    height: auto;
+    line-height: 33px;
+}
+
+.header-cart-text-weight {
+    font-weight: 700;
+}

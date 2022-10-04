@@ -1,0 +1,26 @@
+.signup-header {
+    font-weight: 400;
+    font-size: 28px;
+    line-height: 1.2;
+    margin-bottom: 10px;
+}
+
+.signup-input:focus {
+    border-color: #e77600;
+    box-shadow: 0 0 3px 2px rgb(228 121 17 / 50%);
+}
+
+.signup-pasword {
+    font-family: sans-serif;
+    font-size: 12px;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+}
+
+.signup-input-button {
+    margin-bottom: 10px;
+}
+
+.signup-input-margin {
+    margin-bottom: 0px;
+}

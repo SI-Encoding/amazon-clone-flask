@@ -1,7 +1,22 @@
 # Amazon-clone
 This is an web application done using React and Flask.
 
-## To setup the backend under server directory
+## Installation without Docker
+1. `Make flask-init` to initialize the Flask server.
+2. `Make init-db` to create the database and tables.
+3. `Make start-flask-dev` to run the Flask server.
+4. `Make react-init` to initialize the React app.
+5. `Make start-react-dev` to run the React app.
+
+## Note: The flask_script repository is no longer maintained and so we had three alternatives:
+1. Use flask-cli (which we were originally using but it was not working for us).
+2. Downgrade Flask, which does not seem ideal.
+3. Modify one line of the package code directly (not ideal, very hacky, but for now it works).
+4. Fork the repo and work on it ourselves to keep it up to date (which we may end up doing down the line).
+
+## To deploy the entire thing (via four integrated Docker containers):
+1. `docker-compose up`
+
 
 ### How to install the needed dependencies
 
@@ -15,7 +30,7 @@ This is an web application done using React and Flask.
     b. For iOS, run "source <YOUR_ENV_NAME>/bin/activate"
     c. For Linux, run "source <YOUR_ENV_NAME>/bin/activate"
 4. To install run "pip install -r requirements.txt"
-
+docker run -e TWILIO_ACCOUNT_SID=<YOUR_ACCOUNT_SID> -e TWILIO_AUTH_TOKEN=<YOUR_AUTH_TOKEN> --rm -p 5000:5000 amazon-clone-flask-api
 ### Creating the database
 
 1. Follow tutorial on https://medium.com/@dan.chiniara/installing-postgresql-for-windows-7ec8145698e3#:~:text=Graphical%20Installer%3A%20Postgres.app,and%20database.&text=Mac%20users%2C%20you're%20all%20set!

@@ -1,3 +1,7 @@
+from sqlalchemy.orm import mapper
+
+from models import *
+
 
 class Controller:
     def __init__(self, model, db):
@@ -5,14 +9,26 @@ class Controller:
         self.db = db
 
     def get_one(self, **criteria):
-        item = self.model.query.filter(**criteria).first()
+        filter_criteria = []
+        for key, val in criteria.items():
+            filter_criteria.append(getattr(self.model, key)==val)
+        item = self.model.query.filter(*filter_criteria).first()
         return item
 
-    def get_many(self, limit=10, **criteria):
+    def get_many(self, limit=10, order_by = None, **criteria):
         if criteria:
-            items = self.model.query.filter(**criteria).limit(limit=limit)
+            filter_criteria = []
+            for key, val in criteria.items():
+                filter_criteria.append(getattr(self.model, key)==val)
+            if order_by:
+                items = self.model.query.filter(*filter_criteria).order_by(order_by()).limit(limit=limit)
+            else:
+                items = self.model.query.filter(*filter_criteria).limit(limit=limit)
         else:
-            items = self.model.query.all()
+            if order_by:
+                items = self.model.query.all().order_by(order_by())
+            else:
+                items = self.model.query.all()
         return items
 
     def add_one(self, *args, **kwargs):
@@ -29,5 +45,14 @@ class Controller:
     def delete_one(self, item):
         item.delete()
         self.db.session.commit()
+
+from flask_sqlalchemy import SQLAlchemy
+db = SQLAlchemy()
+
+
+ProductController = Controller(Product, db)
+UserController = Controller(User, db)
+OrderController = Controller(Order, db)
+
 
 

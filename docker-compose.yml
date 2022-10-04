@@ -1,0 +1,50 @@
+services:
+  api: 
+    build:
+      context: .
+      dockerfile: Dockerfile.api
+    image: amazon-clone-flask-api
+    command: gunicorn -b :5000 server:app
+    environment:
+      - TWILIO_ACCOUNT_SID=${TWILIO_ACCOUNT_SID}
+      - TWILIO_AUTH_TOKEN=${TWILIO_AUTH_TOKEN}
+      - PGHOST=db
+      - PGDB=${PGDB}
+      - PGUSER=${PGUSER}
+      - PGPASS=${PGPASS}
+      - SECRET_KEY=${SECRET_KEY}
+      - STRIPE_API_KEY=${STRIPE_API_KEY}
+      - S3_BUCKET=${S3_BUCKET}
+    ports:
+      - "5000:5000"
+    depends_on:
+      - db
+  client: 
+    build:
+      context: .
+      dockerfile: Dockerfile.client
+    image: amazon-clone-flask-client
+    ports:
+      - "3000:3000"
+  db:
+    image: postgres:13-alpine
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_ADMIN=postgres
+      - POSTGRES_ADMIN_PASSWORD=${PG_ADMIN_PASS}
+      - POSTGRES_USER=${PGUSER}
+      - POSTGRES_PASSWORD=${PGPASS}
+      - POSTGRES_DB=${PGDB}
+  nginx:
+    build:
+      context: .
+      dockerfile: Dockerfile.nginx
+    image: amazon-clone-flask-nginx
+    ports:
+      - 1337:80
+    depends_on:
+      - api
+      - client
+volumes:
+  postgres_data:
