@@ -16,9 +16,9 @@ start-react:
 	npm start
 
 init-db:
-	python server/manage2.py create_db
-	python server/manage2.py create_test_user
-	python server/manage2.py create_test_product_and_order
+	python server/manage.py create_db
+	python server/manage.py create_test_user
+	python server/manage.py create_test_product_and_order
 
 test:
 	echo $(FLASK_APP)
