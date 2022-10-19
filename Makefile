@@ -23,5 +23,8 @@ init-db:
 	python server/manage.py create_test_user
 	python server/manage.py create_test_product_and_order
 
+up:
+	docker-compose --env-file .env-dev up
+
 test:
 	echo $(FLASK_APP)
