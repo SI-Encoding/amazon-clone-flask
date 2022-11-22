@@ -5,10 +5,12 @@ from dotenv import load_dotenv
 
 
 class Settings:
-    def __init__(self, env: str = 'dev'):
+    def __init__(self, env: str = 'dev', testing: bool=False):
         dotenv_path = join(dirname(__file__), f"../.env-{'dev' if env == 'dev' else 'production'}")
         load_dotenv(dotenv_path)
 
+        self.testing = testing
+        
         self.PGUSER = os.environ.get("PGUSER")
         self.PGPASS = os.environ.get("PGPASS")
         self.PGHOST = os.environ.get("PGHOST")

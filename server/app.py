@@ -8,7 +8,7 @@ def create_app1(settings):
     app = Flask('app')
 
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-    app.config['SQLALCHEMY_DATABASE_URI'] = f"postgresql://{settings.PGUSER}:{settings.PGPASS}@{settings.PGHOST}/{settings.PGDB}"
+    app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///tests.db" if settings.testing else f"postgresql://{settings.PGUSER}:{settings.PGPASS}@{settings.PGHOST}/{settings.PGDB}"
     app.config.update(SESSION_COOKIE_SAMESITE="None", SESSION_COOKIE_SECURE=True)
 
     db.init_app(app)
