@@ -17,7 +17,7 @@ This is an web application done using React and Flask.
 ## To deploy the entire thing (via four integrated Docker containers):
 1. `docker-compose up`
 
-
+docker-compose up --build --force-recreate
 ### How to install the needed dependencies
 
 1. pip install virtualenv
@@ -36,7 +36,24 @@ docker run -e TWILIO_ACCOUNT_SID=<YOUR_ACCOUNT_SID> -e TWILIO_AUTH_TOKEN=<YOUR_A
 1. Follow tutorial on https://medium.com/@dan.chiniara/installing-postgresql-for-windows-7ec8145698e3#:~:text=Graphical%20Installer%3A%20Postgres.app,and%20database.&text=Mac%20users%2C%20you're%20all%20set!
 2. Rename env-example to .env, and fill in the values.
 3. To create the database, for example, on Ubuntu run "sudo -u postgres psql -c 'create database {db_name};'" 
+4. If it throws error 'sudo: psql: command not found' then run 'sudo apt-get install postgresql-client'
 
+sudo service postgresql status
+
+$ sudo -u postgres createuser --interactive
+Enter name of role to add: myuser
+Shall the new role be a superuser? (y/n) n
+Shall the new role be allowed to create databases? (y/n) n
+Shall the new role be allowed to create more new roles? (y/n) n
+
+$ sudo -u postgres createdb mydatabase
+$ sudo -u postgres psql
+psql (13.5)
+Type "help" for help.
+
+postgres=# GRANT ALL PRIVILEGES ON DATABASE mydatabase TO myuser;
+
+ALTER USER myuser WITH PASSWORD 'new_password';
 
 ## Getting Started with Create React App
 

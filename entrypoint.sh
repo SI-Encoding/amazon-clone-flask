@@ -11,9 +11,10 @@ then
     echo "PostgreSQL started"
 fi
 
-python3 manage.py create_db
-python3 manage.py create_test_user
-python3 manage.py create_test_product_and_order
+
+python3  manage.py create_db
+python3  manage.py create_test_user
+python3  manage.py create_test_product_and_order
 
 
 exec "$@"
