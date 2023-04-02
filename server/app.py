@@ -27,8 +27,8 @@ def create_app1(settings):
     })
 
 
-    from views.users import users
-    from views.store import store
+    from users import users
+    from store import store
 
     app.register_blueprint(users)
     app.register_blueprint(store)

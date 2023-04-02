@@ -4,8 +4,12 @@ services:
       context: .
       dockerfile: Dockerfile.api
     image: amazon-clone-flask-api
-    command: gunicorn -b :5000 server:app
+    command: bash -c "gunicorn server:create_app1"
     environment:
+      - GUNICORN_BIND=0.0.0.0:5000
+      - GUNICORN_WORKERS=2
+      - GUNICORN_THREADS=4
+      - GUNICORN_TIMEOUT=0
       - TWILIO_ACCOUNT_SID=${TWILIO_ACCOUNT_SID}
       - TWILIO_AUTH_TOKEN=${TWILIO_AUTH_TOKEN}
       - PGHOST=db
@@ -19,6 +23,8 @@ services:
       - "5000:5000"
     depends_on:
       - db
+    volumes:
+      - .:/app
   client: 
     build:
       context: .

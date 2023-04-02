@@ -7,7 +7,6 @@ from settings import Settings
 
 settings = Settings()
 
-
 app, db = create_app1(settings)
 
 app.app_context().push()
@@ -23,7 +22,6 @@ def create_db():
     db.metadata.drop_all(bind=db.engine, tables=[order_product_association_table, Order.__table__, User.__table__, Product.__table__])
     db.create_all()
     db.session.commit()
-
 
 @manager.command
 def create_test_user():
@@ -59,8 +57,6 @@ def test():
     if result.wasSuccessful():
         return 0
     return 1
-
-print(__name__)
 
 if __name__ == '__main__':
     manager.run()
